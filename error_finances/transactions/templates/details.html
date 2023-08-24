@@ -1,12 +1,14 @@
-<!DOCTYPE html>
-<html>
+{% extends 'master_transactions.html' %}
 
-<body>
+{% block title %}
+  Error Finances - Detalhes
+{% endblock %}
 
-<h1>Usuário: {{ all_transactions.userID }}</h1>
-  
-<p>Transação: {{ all_transactions.transactionName }}</p>
-<p>Voltar para as <a href="/transactions">transações</a></p>
+{% block content %}
+  <h1>Usuário: {{ all_transactions.userID }}</h1>
 
-</body>
-</html>
+  <p>Transação: {{ all_transactions.transactionName }}</p>
+  <p>
+    Voltar para as <a href="/transactions">transações</a>
+  </p>
+{% endblock %}

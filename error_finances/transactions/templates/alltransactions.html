@@ -1,0 +1,17 @@
+{% extends 'master_transactions.html' %}
+
+{% block title %}
+  Error Finances - Transações
+{% endblock %}
+
+{% block content %}
+  <h1>Transações</h1>
+  <p>Lista de transações</p>
+  <ul>
+    {% for x in all_transactions %}
+      <li>
+        <a href="details/{{ x.id }}">{{ x.userID }}, {{ x.transactionName }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

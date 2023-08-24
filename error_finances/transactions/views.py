@@ -9,7 +9,7 @@ from .models import Transactions
 # Exibe todas as transações
 def allTransactions(request):
   all_transactions = Transactions.objects.all().values()
-  template = loader.get_template('myfirst.html')
+  template = loader.get_template('alltransactions.html')
   context = {
     'all_transactions': all_transactions,
   }
