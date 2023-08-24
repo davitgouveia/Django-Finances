@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+    <h1>Transações</h1>
+    <p>Lista de transações</p>
+    <ul>
+        {% for x in all_transactions %}
+        <li><a href="details/{{ x.id }}"> {{ x.userID }}, {{ x.transactionName }} </a></li>
+        {% endfor %}
+    </ul>
+</body>
+
+</html>
