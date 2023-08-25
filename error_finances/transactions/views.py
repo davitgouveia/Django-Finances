@@ -4,7 +4,7 @@ from django.template import loader
 
 from .models import Transactions
 
-# Create your views here.
+# Create your views here. #
 
 # Exibe todas as transações
 def allTransactions(request):
@@ -21,6 +21,13 @@ def details(request, id):
   template = loader.get_template('details.html')
   context = {
     'all_transactions': all_transactions
+  }
+  return HttpResponse(template.render(context, request))
+
+def testing(request):
+  template = loader.get_template('template.html')
+  context = {
+    'teste' : ['Apple', 'Banana', 'Cherry'],
   }
   return HttpResponse(template.render(context, request))
 
