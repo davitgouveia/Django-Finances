@@ -5,12 +5,26 @@
 {% endblock %}
 
 {% block content %}
+  <h1>Transações do Usuário</h1>
+  <p>Lista de transações:</p>
+  <ul>
+    {% for y in user_transactions %}
+      <li>
+        <a href="details/{{ y.id }}">
+          Nome: {{ y.transactionName }}<br />
+          Valor: R$ {{ y.value }}<br />
+          Categoria: {{ y.category }}<br />
+          Data: {{ y.creationDate }}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
   <h1>Transações</h1>
   <p>Lista de transações</p>
   <ul>
     {% for x in all_transactions %}
       <li>
-        <a href="details/{{ x.id }}">{{ x.userID }}, {{ x.transactionName }}</a>
+        <a href="details/{{ x.id }}">{{ x.transactionName }}, {{ x.value }}, {{ x.category }}</a>
       </li>
     {% endfor %}
   </ul>

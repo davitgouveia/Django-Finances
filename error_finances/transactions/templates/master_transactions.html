@@ -5,8 +5,10 @@
 </head>
 <body>
     <header style="width: 100%; background-color: #111827; color:white; padding: 1em;">
-        <h1>Error Finanças</h1>
+        <h1>Save Savvy</h1>
         <p><a href="/">HOME</a></p>
+        <p>Olá, {{ current_user }}</p>
+        <p><a href="/accounts/logout">Sair</a></p>
     </header>
 {% block content %}
 {% endblock %}

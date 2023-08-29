@@ -1,15 +1,21 @@
-{% extends "master_home.html" %}
+{% extends 'master_home.html' %}
 
 {% block title %}
-  Error Finanças
+  Save Savvy
 {% endblock %}
 
-
 {% block content %}
-  <h1>Error Finanças</h1>
+  <h1>Save Savvy</h1>
+
+  {% if username %}
+    <p>Hi {{ username }}</p>
+  {% else %}
+    <p>Welcome</p>
+  {% endif %}
 
   <h3>Transações</h3>
-  
-  <p>Confira as <a href="transactions/">transações</a></p>
-  
+
+  <p>
+    Confira as <a href="transactions/">transações</a>
+  </p>
 {% endblock %}

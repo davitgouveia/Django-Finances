@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>{% block title %}{% endblock %}</title>
-</head>
-<body>
+  <head>
+    <title>
+      {% block title %}
+      {% endblock %}
+    </title>
+  </head>
+  <body>
     <header style="width: 100%; background-color: #111827; color:white; padding: 1em;">
-        <h1>Error Finanças</h1>
+      <h1>Save Savvy</h1>
+      {% if username %}
+        <p>Hi {{ username }}</p>
+      {% else %}
+        <p>Welcome</p>
+      {% endif %}
     </header>
-{% block content %}
-{% endblock %}
+    {% block content %}
 
-</body>
+    {% endblock %}
+  </body>
 </html>

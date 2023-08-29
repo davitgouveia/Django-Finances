@@ -30,14 +30,31 @@ INSTALLED_APPS = [
     #AllAuth
     'allauth',
     'allauth.account',
-    'allauth.socialaccount',
     #AllAuth Providers
+    'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
 
     #Apps
     'home',
     'transactions',
 ]
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': '431319437020-r0tri1ht6b9u7b45g92vbmfh99unsp2v.apps.googleusercontent.com',
+            'secret': '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',
+            'key': ''
+        },
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -62,6 +79,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request',
             ],
         },
     },
@@ -88,6 +106,12 @@ AUTHENTICATION_BACKENDS = [
     # `allauth` specific authentication methods, such as login by email
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_VERIFICATION = 'optional'
+LOGIN_REDIRECT_URL = '/'
 
 
 # Password validation
