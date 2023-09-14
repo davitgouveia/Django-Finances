@@ -6,6 +6,7 @@
 
 {% block content %}
   <h1>Transações do Usuário</h1>
+  <button onclick="location.href='/transactions/create'" type="button">Criar Transações</button>
   <p>Lista de transações:</p>
   <ul>
     {% for y in user_transactions %}
@@ -16,6 +17,7 @@
           Categoria: {{ y.category }}<br />
           Data: {{ y.creationDate }}
         </a>
+        <br><br>
       </li>
     {% endfor %}
   </ul>

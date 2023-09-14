@@ -8,7 +8,8 @@
   </head>
   <body>
     <header style="width: 100%; background-color: #111827; color:white; padding: 1em;">
-      <h1>Save Savvy</h1>
+      {% load static %}
+      <img src="{% static '/images/master/logo.png' %}" alt="My image">
       {% if username %}
         <p>Hi {{ username }}</p>
       {% else %}

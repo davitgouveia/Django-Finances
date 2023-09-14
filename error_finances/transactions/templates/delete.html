@@ -1,0 +1,15 @@
+{% extends 'master_transactions.html' %}
+
+{% block title %}
+  Error Finances - Detalhes
+{% endblock %}
+
+{% block content %}
+    <p>Tem certeza que deseja deletar <b>{{transaction.transactionName}}</b>?</p>
+    <form method="post">
+        {% csrf_token %}
+        <input type="submit" name="confirm" value="Deletar">
+    </form>
+
+    <p>Voltar para a <a href="/transactions/details/{{transaction.id}}">transação</a></p>
+{% endblock %}

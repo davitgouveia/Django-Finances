@@ -5,11 +5,11 @@
 {% endblock %}
 
 {% block content %}
-  <h1>Usuário: {{ all_transactions.user.first_name }}</h1>
+  <h1>Usuário: {{ transaction.user.first_name }}</h1>
 
-  <p>Transação: {{ all_transactions.transactionName }}</p>
-  <p> Valor: R$ {{ all_transactions.value }}
-  <p>
-    Voltar para as <a href="/transactions">transações</a>
-  </p>
+  <p>Transação: {{ transaction.transactionName }}</p>
+  <p> Valor: R$ {{ transaction.value }}
+  <button onclick="location.href='/transactions/edit/{{transaction.id}}'" type="button">Editar</button>
+  <button onclick="location.href='/transactions/delete/{{transaction.id}}'" type="button">Deletar</button>
+  <p>Voltar para as <a href="/transactions">transações</a></p>
 {% endblock %}
