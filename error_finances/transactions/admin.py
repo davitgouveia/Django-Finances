@@ -4,6 +4,6 @@ from .models import Transactions
 # Register your models here.
 
 class TransactionsAdmin(admin.ModelAdmin):
-    list_display = ("user", "transactionName", "value", "category", "creationDate")
+    list_display = ("idUser", "transactionName", "value", "idCategory", "creationDate")
 
 admin.site.register(Transactions, TransactionsAdmin)
