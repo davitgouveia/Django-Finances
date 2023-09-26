@@ -5,6 +5,7 @@ from django.template import loader
 from datetime import date
 
 from .models import Transactions
+from .models import TransactionCategory
 
 @login_required
 def userData(request):
@@ -56,18 +57,27 @@ def createTransaction(request):
     
     if request.method == 'POST':
         transaction_name = request.POST['transactionName']
+        transaction_name = request.POST['transactionDescription']
         value = request.POST['value']
+        type = 1 if ('expense' in request.POST) else 2
+        status_id = request.POST['status']
         category = request.POST['category']
         creation_date = request.POST['creationDate']
-        expense = 'expense' in request.POST  # Verifique se a caixa de despesas está marcada
+        
+        
+        color, category_name = category.split('/', 1)
+        category_id = get_or_create_category(user_data['current_user_id'], category_name, color)
 
+        # Create the transaction with the selected category
         transaction = Transactions(
             user=user_data['current_user_id'],
             transactionName=transaction_name,
             value=value,
-            category=category,
+            idType=type,
+            idStatus=status_id,
+            idCategory=category_id,
+            idRepeatable=0,
             creationDate=creation_date,
-            expense=expense
         )
         transaction.save()
 
@@ -80,6 +90,15 @@ def createTransaction(request):
     }
     
     return HttpResponse(template.render(context,request))
+  
+def get_or_create_category(user_id, category_name, category_color):
+    try:
+        category = TransactionCategory.objects.get(idUser=user_id, categoryName=category_name)
+    except TransactionCategory.DoesNotExist:
+        category = TransactionCategory.objects.create(idUser=user_id, categoryName=category_name, categoryColor=category_color)
+
+    return category.id  # Return the ID of the category
+  
 
 def editTransaction(request, id):
   user_data = userData(request)

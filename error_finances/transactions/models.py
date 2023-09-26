@@ -5,9 +5,15 @@ from datetime import date
 
 class TransactionType(models.Model):
     type = models.CharField(max_length=10)
+    
+    def __str__(self):
+        return self.type
 
 class TransactionStatus(models.Model):
     status = models.CharField(max_length=10)
+    
+    def __str__(self):
+        return self.status
 
 class TransactionCategory(models.Model):
     idUser = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -28,7 +34,7 @@ class cnfRepeatability(models.Model):
     
 class TransactionRepeatability(models.Model):
     idRepeatability = models.ForeignKey(cnfRepeatability, on_delete=models.PROTECT)
-    date = models.DateField    
+    date = models.DateField
     
 class Transactions(models.Model):
     idUser = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -36,14 +42,14 @@ class Transactions(models.Model):
     transactionDescription = models.CharField(max_length=100, null=True)
     value = models.DecimalField(max_digits=19, decimal_places=2, default=0.00)
     idType = models.ForeignKey(TransactionType, on_delete=models.PROTECT, default=1)
-    idStatus = models.ForeignKey(TransactionStatus, on_delete=models.SET(1), default=1)
-    idCategory = models.ForeignKey(TransactionCategory, on_delete=models.SET(1), default=1)
-    idTransactionAccount = models.ForeignKey(TransactionAccount, on_delete=models.PROTECT, default=1)
-    idRepeatable = models.ForeignKey(TransactionRepeatability, on_delete=models.SET(1), default=1)
+    idStatus = models.ForeignKey(TransactionStatus, on_delete=models.SET(2), default=1)
+    idCategory = models.ForeignKey(TransactionCategory, on_delete=models.SET(1), null=True)
+    idTransactionAccount = models.ForeignKey(TransactionAccount, on_delete=models.PROTECT, null=True)
+    idRepeatable = models.ForeignKey(TransactionRepeatability, on_delete=models.SET(1), null=True)
     creationDate = models.DateField(default=date.today)
 
     def __str__(self):
-        return f"{self.user.username} {self.transactionName} {self.value} {self.category} {self.creationDate}"
+        return f"{self.user.username} {self.transactionName} {self.value} {self.idCategory} {self.creationDate}"
 
 class Expense(Transactions):
     dueDate = models.DateField()
