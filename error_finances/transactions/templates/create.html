@@ -31,7 +31,7 @@
     <label for="category">Categoria:</label>
       <select name="category" id="category">
       <option value="0077b6/home">Home</option>
-      <option value="education">Education</option>
+      <option value="228B22/education">Education</option>
       <option value="leisure">Leisure</option>
       <option value="restaurant">Restaurant</option>
       <option value="health">Health</option>
@@ -49,7 +49,6 @@
     <div id="repeatability-container" style="display: none;">
       <label for="repeatability">Repeatability:</label>
       <select name="repeatability" id="repeatability">
-          <option value="1">Single</option>
           <option value="2">Daily</option>
           <option value="3">Weekly</option>
           <option value="4">Monthly</option>
@@ -57,6 +56,9 @@
           <option value="6">Indefinite</option>
           <option value="7">Specific</option>
       </select><br>
+      
+      <label for="repeatable_quantity">Repeatable Quantity:</label>
+      <input type="number" name="repeatable_quantity" id="repeatable_quantity" value=1><br>
       
       <div class="specific-repeatability" style="display: none;">
         <label for="repeatability-date">Specific Date:</label>

@@ -18,14 +18,17 @@ class TransactionStatus(models.Model):
 class TransactionCategory(models.Model):
     idUser = models.ForeignKey(User, on_delete=models.CASCADE)
     categoryName = models.CharField(max_length=50)
-    categoryColor = models.CharField(max_length=10)
+    categoryColor = models.CharField(max_length=20)
+    
+class TransactionAccountTypes(models.Model):
+    type = models.CharField(max_length=10)
 
 class TransactionAccount(models.Model):
     idUser = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.BooleanField # 1 = Active, 0 = Inactive
     accountName = models.CharField(max_length=50)
     accountColor = models.CharField(max_length=10)
-    type = models.CharField(max_length=10)
+    type = models.ForeignKey(TransactionAccountTypes, on_delete=models.PROTECT)
     billCloseDate = models.IntegerField()
     billDueDate = models.IntegerField()
 
@@ -34,7 +37,8 @@ class cnfRepeatability(models.Model):
     
 class TransactionRepeatability(models.Model):
     idRepeatability = models.ForeignKey(cnfRepeatability, on_delete=models.PROTECT)
-    date = models.DateField
+    quantity = models.IntegerField(default=1)
+    date = models.IntegerField(default=0)
     
 class Transactions(models.Model):
     idUser = models.ForeignKey(User, on_delete=models.CASCADE)

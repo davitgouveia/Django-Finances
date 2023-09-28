@@ -6,6 +6,10 @@ from datetime import date
 
 from .models import Transactions
 from .models import TransactionCategory
+from .models import TransactionRepeatability
+from .models import TransactionType
+from .models import TransactionStatus
+from .models import cnfRepeatability
 
 @login_required
 def userData(request):
@@ -24,7 +28,7 @@ def userTransactions(request):
     user_data = userData(request)
     
     all_transactions = Transactions.objects.all().values()
-    user_transactions = Transactions.objects.filter(user=user_data['current_user_id'])
+    user_transactions = Transactions.objects.filter(idUser=user_data['current_user_id'])
 
     template = loader.get_template('alltransactions.html')
     context = {
@@ -57,26 +61,35 @@ def createTransaction(request):
     
     if request.method == 'POST':
         transaction_name = request.POST['transactionName']
-        transaction_name = request.POST['transactionDescription']
+        transaction_description = request.POST['transactionDescription']
         value = request.POST['value']
-        type = 1 if ('expense' in request.POST) else 2
-        status_id = request.POST['status']
+        type = get_type(1) if ('expense' in request.POST) else get_type(2)
+        status = get_status(request.POST['status'])
         category = request.POST['category']
         creation_date = request.POST['creationDate']
         
+        if('repeatable' in request.POST):
+          repeatable_option = get_repeatability_option(request.POST['repeatability'])
+          repeatable_quantity = request.POST['repeatable_quantity']
+          repeatable_date = 0 if request.POST['repeatability-date'] == "" else request.POST['repeatability-date']
+          repeatable_id = create_repetability(repeatable_option,repeatable_quantity,repeatable_date)
+        else:
+          repeatable_id = None
+        
         
         color, category_name = category.split('/', 1)
-        category_id = get_or_create_category(user_data['current_user_id'], category_name, color)
+        category_id = get_or_create_category(user_data['current_user_id'], category, color)
 
-        # Create the transaction with the selected category
+        # Create transaction
         transaction = Transactions(
-            user=user_data['current_user_id'],
+            idUser=user_data['current_user_id'],
             transactionName=transaction_name,
+            transactionDescription=transaction_description,
             value=value,
             idType=type,
-            idStatus=status_id,
+            idStatus=status,
             idCategory=category_id,
-            idRepeatable=0,
+            idRepeatable=repeatable_id,
             creationDate=creation_date,
         )
         transaction.save()
@@ -90,14 +103,30 @@ def createTransaction(request):
     }
     
     return HttpResponse(template.render(context,request))
-  
-def get_or_create_category(user_id, category_name, category_color):
-    try:
-        category = TransactionCategory.objects.get(idUser=user_id, categoryName=category_name)
-    except TransactionCategory.DoesNotExist:
-        category = TransactionCategory.objects.create(idUser=user_id, categoryName=category_name, categoryColor=category_color)
 
-    return category.id  # Return the ID of the category
+def get_repeatability_option(option):
+  repeat_option_instance = cnfRepeatability.objects.get(id=option)
+  return repeat_option_instance
+
+def get_status(status):
+  status_instance = TransactionStatus.objects.get(id=status)
+  return status_instance
+
+def get_type(type):
+  type_instance = TransactionType.objects.get(id=type)
+  return type_instance
+  
+def get_or_create_category(user_id, categoryName, category_color):
+    try:
+        category_instance = TransactionCategory.objects.get(idUser=user_id, categoryName=categoryName)
+    except TransactionCategory.DoesNotExist:
+        category_instance = TransactionCategory.objects.create(idUser=user_id, categoryName=categoryName, categoryColor=category_color)
+
+    return category_instance 
+  
+def create_repetability(repeatable_option, repeatable_quantity, repeatable_date):
+  repeatability_instance = TransactionRepeatability.objects.create(idRepeatability=repeatable_option, quantity=repeatable_quantity,date=repeatable_date)
+  return repeatability_instance
   
 
 def editTransaction(request, id):
