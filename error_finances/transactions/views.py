@@ -78,7 +78,7 @@ def createTransaction(request):
         creation_date = request.POST['creationDate']
         
         # Due Date
-        if request.POST['status'] == 4 or request.POST['status'] == 6:
+        if request.POST['status'] == "4" or request.POST['status'] == "6":
           due_date = request.POST['dueDate']
         else:
           due_date = None
@@ -86,8 +86,10 @@ def createTransaction(request):
         # Repeatable
         if('repeatable' in request.POST):
           repeatable_option = get_repeatability_option(request.POST['repeatability'])
+          print("repeatable_quantity: " + request.POST['repeatable_quantity'])
+          print("repeatable_date: " + request.POST['repeatability-date'])
           repeatable_quantity = 0 if('indefinite' in request.POST) else request.POST['repeatable_quantity']
-          repeatable_date = 0 if request.POST['repeatability'] != 7 else request.POST['repeatability-date']
+          repeatable_date = 0 if request.POST['repeatability'] != "7" else request.POST['repeatability-date']
           repeatable_id = create_repetability(repeatable_option,repeatable_quantity,repeatable_date)
         else:
           repeatable_id = None
@@ -123,6 +125,7 @@ def createTransaction(request):
               idTransactionAccount=account,
               idRepeatable=repeatable_id,
               creationDate=creation_date,
+              dueDate=due_date,
           )
         
         transaction.save()
