@@ -85,6 +85,26 @@ nav img {
     margin-left: 10px;
 }
 
+/* Right-container */
+.right-container {
+    background-color: #00ff24;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    color: white;
+    height: 843px;
+    margin-left: 282px;
+    margin-right: 25px;
+    margin-top: -85px;
+}
+.right-container a {
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    font-size: 162px;
+}
 
 /* Rights */
 .Rights {
