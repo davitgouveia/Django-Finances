@@ -85,6 +85,23 @@ nav img {
     margin-left: 10px;
 }
 
+/* Right-container */
+.right-container {
+    background-color: #1F2A3F;
+    flex-direction: column;
+    justify-content: flex-start;
+    color: white;
+    margin-left: 282px;
+    margin-right: 25px;
+    margin-top: -85px;
+    overflow-y: scroll;
+    height: 85vh;
+}
+
+.right-container a {
+    color: white;
+}
+
 
 /* Rights */
 .Rights {
