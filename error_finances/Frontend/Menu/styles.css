@@ -43,6 +43,22 @@ img {
     margin-right: 10px;
 }
 
+.toggle-button {
+    background-color: #1F2A3F;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    border-radius: 17.486px;
+    margin-left: 70px;
+}
+
+.toggle-button:hover {
+    background-color: #00F5FF   
+}
+
 /* left-container */
 .container {
     margin: 35px;
@@ -93,7 +109,6 @@ nav img {
     justify-content: flex-start;
     align-items: center;
     color: white;
-    height: 843px;
     margin-left: 282px;
     margin-right: 25px;
     margin-top: -85px;
@@ -103,7 +118,6 @@ nav img {
     text-decoration: none;
     display: flex;
     align-items: center;
-    font-size: 162px;
 }
 
 /* Rights */
@@ -117,4 +131,10 @@ nav img {
     line-height: 19.22px;
     letter-spacing: -0.28px;
     margin-top: auto;
+}
+
+@media (min-width: 768px) {
+    .toggle-button {
+        display: none;
+    }
 }
