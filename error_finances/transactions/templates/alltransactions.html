@@ -1,12 +1,13 @@
 {% extends 'master_transactions.html' %}
 
 {% block title %}
-  Error Finances - Transações
+  Save Savvy - Transações
 {% endblock %}
 
 {% block content %}
   <h1>Transações do Usuário</h1>
-  <button onclick="location.href='/transactions/create'" type="button">Criar Transações</button>
+  <button onClick="location.href='/transactions/create'" type="button">Criar Transações</button>
+  <button onClick="location.href='/transactions/accounts'" type="button">Contas</button>
   <p>Lista de transações:</p>
   <ul>
     {% for y in user_transactions %}

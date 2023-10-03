@@ -24,8 +24,8 @@
       <select name="status" id="status">
       <option value="3">Paid</option>
       <option value="4">Not Paid</option>
-      <option value="5">Receivable</option>
-      <option value="6">Received</option>
+      <option value="5">Received</option>
+      <option value="6">Receivable</option>
       </select><br>
 
     <label for="category">Categoria:</label>
@@ -40,9 +40,23 @@
       <option value="clothing">Clothing</option>
       </select><br>
 
+    <label for="account">Conta:</label>
+    <select name="account" id="account" required>
+        {% for account in user_accounts %}
+            <option value="{{ account.id }}">{{ account.accountName }}</option>
+        {% endfor %}
+    </select><br>
+
     <label for="creationDate">Data de Criação:</label>
     <input type="date" name="creationDate" id="creationDate" value="{{current_date}}"><br>
 
+    <div id="dueDate-container" style="display: none;">
+        <label for="dueDate">Data de Vencimento:</label>
+        <input type="date" name="dueDate" id="dueDate" value="{{current_date}}"><br>
+    </div>
+
+    <hr>
+    
     <label for="repeatable">Repeatable:</label>
     <input type="checkbox" name="repeatable" id="repeatable"><br>
 
@@ -53,12 +67,16 @@
           <option value="3">Weekly</option>
           <option value="4">Monthly</option>
           <option value="5">Annualy</option>
-          <option value="6">Indefinite</option>
           <option value="7">Specific</option>
       </select><br>
+
+      <label for="indefinite">Indefinite:</label>
+      <input type="checkbox" name="indefinite" id="indefinite"><br>
       
-      <label for="repeatable_quantity">Repeatable Quantity:</label>
-      <input type="number" name="repeatable_quantity" id="repeatable_quantity" value=1><br>
+      <div class="repeatability-quantity" style="display:block">
+        <label for="repeatable_quantity">Repeatable Quantity:</label>
+        <input type="number" name="repeatable_quantity" id="repeatable_quantity" value=1><br>
+      </div>
       
       <div class="specific-repeatability" style="display: none;">
         <label for="repeatability-date">Specific Date:</label>
@@ -72,11 +90,11 @@
 
 <script>
   // Status checkbox treatment
-  var StatusCheckbox = document.getElementById('expense');
+  var expenseCheckbox = document.getElementById('expense');
   var StatusSelect = document.getElementById('status');
   
   function updateStatusOptions() {
-      if (StatusCheckbox.checked) {
+      if (expenseCheckbox.checked) {
           // Show options with values 3 and 4
           for (var i = 0; i < StatusSelect.options.length; i++) {
               var option = StatusSelect.options[i];
@@ -107,9 +125,22 @@
       }
   }
   
-  StatusCheckbox.addEventListener('change', updateStatusOptions);
+  expenseCheckbox.addEventListener('change', updateStatusOptions);
   // Initial update based on the checkbox state
   updateStatusOptions();
+
+  const dueDateContainer = document.getElementById("dueDate-container")
+
+  function dueDateVisibility(){
+    if (StatusSelect.value == '4' || StatusSelect.value == '6') {
+        dueDateContainer.style.display = "block";
+    } else
+    dueDateContainer.style.display = "none";
+  }
+
+  StatusSelect.addEventListener('change', dueDateVisibility);
+
+
   //-----------------------------
 
   // Repatable
@@ -117,29 +148,52 @@
   const repeatableCheckbox = document.getElementById("repeatable");
   const repeatabilitySelect = document.getElementById("repeatability");
   const specificRepeatability = document.querySelector(".specific-repeatability");
+  const repeatabilityQuantity = document.querySelector(".repeatability-quantity");
+  const indefiniteCheckBox = document.getElementById("indefinite");
+
+  indefiniteCheckBox.addEventListener("change", function () {
+    if (this.checked){
+        repeatabilityQuantity.style.display = "none";
+    }
+  });
 
   // Add an event listener to the repeatable checkbox
   repeatableCheckbox.addEventListener("change", function () {
-      if (this.checked) {
-          // If the checkbox is checked, show the repeatability-container
-          document.getElementById("repeatability-container").style.display = "block";
-      } else {
-          // If the checkbox is unchecked, hide the container and specific-repeatability
-          document.getElementById("repeatability-container").style.display = "none";
-          specificRepeatability.style.display = "none";
-      }
+    if (this.checked) {
+      // If the checkbox is checked, show the repeatability-container
+      document.getElementById("repeatability-container").style.display = "block";
+    } else {
+      // If the checkbox is unchecked, hide the container and specific-repeatability
+      document.getElementById("repeatability-container").style.display = "none";
+      specificRepeatability.style.display = "none";
+    }
   });
 
   // Add an event listener to the repeatability select
   repeatabilitySelect.addEventListener("change", function () {
-      if (this.value === "7") {
-          // If "Specific" is selected, show the specific-repeatability
-          specificRepeatability.style.display = "block";
-      } else {
-          // If any other option is selected, hide the specific-repeatability
-          specificRepeatability.style.display = "none";
-      }
+    if (this.value === "7") {
+      // If "Specific" is selected, show the specific-repeatability
+      specificRepeatability.style.display = "block";
+    } else {
+      // If any other option is selected, hide the specific-repeatability
+      specificRepeatability.style.display = "none";
+    }
   });
+
+  // Add an event listener to the indefinite checkbox
+  indefiniteCheckBox.addEventListener("change", function () {
+    if (this.checked) {
+      // If the checkbox is checked, hide the repeatabilityQuantity input
+      repeatabilityQuantity.style.display = "none";
+    } else {
+      // If the checkbox is unchecked, show the repeatabilityQuantity input
+      repeatabilityQuantity.style.display = "block";
+    }
+  });
+
+  // Initial updates based on the selected options
+  updateStatusOptions();
+  toggleDueDateVisibility();
 </script>
 
 {% endblock %}

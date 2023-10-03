@@ -7,6 +7,7 @@ urlpatterns = [
     path('create/', views.createTransaction, name='create'),
     path('edit/<int:id>', views.editTransaction, name='edit'),
     path('delete/<int:id>', views.deleteTransaction, name='delete'),
+    path('accounts/', views.userAccounts, name='userAccounts'),
     
     path('testing/', views.testing, name='testing'),   
 ]

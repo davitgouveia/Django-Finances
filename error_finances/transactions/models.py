@@ -56,7 +56,7 @@ class Transactions(models.Model):
         return f"{self.user.username} {self.transactionName} {self.value} {self.idCategory} {self.creationDate}"
 
 class Expense(Transactions):
-    dueDate = models.DateField()
+    dueDate = models.DateField(null=True)
     
 class Income(Transactions):
-    dueDate = models.DateField()
+    dueDate = models.DateField(null=True)

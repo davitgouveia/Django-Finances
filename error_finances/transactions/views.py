@@ -5,11 +5,14 @@ from django.template import loader
 from datetime import date
 
 from .models import Transactions
+from .models import Expense,Income
 from .models import TransactionCategory
 from .models import TransactionRepeatability
 from .models import TransactionType
 from .models import TransactionStatus
 from .models import cnfRepeatability
+
+from .models import TransactionAccount
 
 @login_required
 def userData(request):
@@ -53,11 +56,12 @@ def detailsTransaction(request, id):
   }
   return HttpResponse(template.render(context, request))
 
-# CRUD
+# Create Transactions
 def createTransaction(request):
     today = date.today()
     current_date = today.strftime('%Y-%m-%d')
     user_data = userData(request)
+    user_accounts = get_user_accounts(user_data['current_user_id'])
     
     if request.method == 'POST':
         transaction_name = request.POST['transactionName']
@@ -66,12 +70,24 @@ def createTransaction(request):
         type = get_type(1) if ('expense' in request.POST) else get_type(2)
         status = get_status(request.POST['status'])
         category = request.POST['category']
+        
+        # Account
+        account_id = request.POST['account']
+        account = TransactionAccount.objects.get(id=account_id)
+        
         creation_date = request.POST['creationDate']
         
+        # Due Date
+        if request.POST['status'] == 4 or request.POST['status'] == 6:
+          due_date = request.POST['dueDate']
+        else:
+          due_date = None
+        
+        # Repeatable
         if('repeatable' in request.POST):
           repeatable_option = get_repeatability_option(request.POST['repeatability'])
-          repeatable_quantity = request.POST['repeatable_quantity']
-          repeatable_date = 0 if request.POST['repeatability-date'] == "" else request.POST['repeatability-date']
+          repeatable_quantity = 0 if('indefinite' in request.POST) else request.POST['repeatable_quantity']
+          repeatable_date = 0 if request.POST['repeatability'] != 7 else request.POST['repeatability-date']
           repeatable_id = create_repetability(repeatable_option,repeatable_quantity,repeatable_date)
         else:
           repeatable_id = None
@@ -81,17 +97,34 @@ def createTransaction(request):
         category_id = get_or_create_category(user_data['current_user_id'], category, color)
 
         # Create transaction
-        transaction = Transactions(
-            idUser=user_data['current_user_id'],
-            transactionName=transaction_name,
-            transactionDescription=transaction_description,
-            value=value,
-            idType=type,
-            idStatus=status,
-            idCategory=category_id,
-            idRepeatable=repeatable_id,
-            creationDate=creation_date,
-        )
+        if ('expense' in request.POST):
+          transaction = Expense(
+              idUser=user_data['current_user_id'],
+              transactionName=transaction_name,
+              transactionDescription=transaction_description,
+              value=value,
+              idType=type,
+              idStatus=status,
+              idCategory=category_id,
+              idTransactionAccount=account,
+              idRepeatable=repeatable_id,
+              creationDate=creation_date,
+              dueDate=due_date,
+          )
+        else:
+          transaction = Income(
+              idUser=user_data['current_user_id'],
+              transactionName=transaction_name,
+              transactionDescription=transaction_description,
+              value=value,
+              idType=type,
+              idStatus=status,
+              idCategory=category_id,
+              idTransactionAccount=account,
+              idRepeatable=repeatable_id,
+              creationDate=creation_date,
+          )
+        
         transaction.save()
 
         return redirect('/transactions')  # Redirecione para a página desejada após a criação da transação
@@ -100,6 +133,7 @@ def createTransaction(request):
     context = {'current_date' : current_date,
                'current_user_id' : user_data['current_user_id'],
                'current_user_name' : user_data['current_user_name'],
+               'user_accounts': user_accounts,
     }
     
     return HttpResponse(template.render(context,request))
@@ -128,6 +162,7 @@ def create_repetability(repeatable_option, repeatable_quantity, repeatable_date)
   repeatability_instance = TransactionRepeatability.objects.create(idRepeatability=repeatable_option, quantity=repeatable_quantity,date=repeatable_date)
   return repeatability_instance
   
+# Edit Transactions
 
 def editTransaction(request, id):
   user_data = userData(request)
@@ -155,6 +190,8 @@ def editTransaction(request, id):
   
   return HttpResponse(template.render(context,request))
 
+# Delete Transactions
+
 def deleteTransaction(request, id):
   user_data = userData(request)
   transaction = Transactions.objects.get(id = id)
@@ -171,6 +208,28 @@ def deleteTransaction(request, id):
              'current_user_name' : user_data['current_user_name']}
         
   return HttpResponse(template.render(context,request))
+
+# -== Accounts ==-
+
+def get_user_accounts(user_id):
+  user_accounts_instance = TransactionAccount.objects.filter(idUser=user_id)
+  return user_accounts_instance
+
+# Create Accounts
+
+@login_required
+def userAccounts(request):
+    user_data = userData(request)
+    
+    user_accounts = get_user_accounts(user_data['current_user_id'])
+
+    template = loader.get_template('accounts.html')
+    context = {
+       'current_user_id' : user_data['current_user_id'],
+       'current_user_name' : user_data['current_user_name'],
+       'user_accounts': user_accounts,
+    }
+    return HttpResponse(template.render(context, request))
 
 def testing(request):
   template = loader.get_template('template.html')
