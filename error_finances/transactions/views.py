@@ -1,8 +1,9 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.template import loader
-from datetime import date
+from django.db.models import Sum
+from datetime import date, datetime, timedelta
 
 from .models import Transactions
 from .models import Expense,Income
@@ -170,26 +171,35 @@ def create_repetability(repeatable_option, repeatable_quantity, repeatable_date)
 def editTransaction(request, id):
   user_data = userData(request)
   transaction = Transactions.objects.get(id = id)
+  user_accounts = get_user_accounts(user_data['current_user_id'])
+  print(transaction.idType)
   
   if request.method == 'POST':
-    transaction_name = request.POST['transactionName']
+    name = request.POST['transactionName']
+    description = request.POST['transactionDescription']
     value = request.POST['value']
+    status = get_status(request.POST['status'])
     category = request.POST['category']
-    creation_date = request.POST['creationDate']
-    expense = 'expense' in request.POST
+    account_id = request.POST['account']
+    account = TransactionAccount.objects.get(id=account_id)
+    
+    color, category_name = category.split('/', 1)
+    category_id = get_or_create_category(user_data['current_user_id'], category, color)
         
-    transaction.transactionName = transaction_name
+    transaction.transactionName = name
+    transaction.transactionDescription = description
+    transaction.idTransactionAccount = account
     transaction.value = value
-    transaction.category = category
-    transaction.creationDate = creation_date
-    transaction.expense = expense
+    transaction.idStatus = status
+    transaction.idCategory = category_id
     transaction.save()
         
     return redirect('/transactions')  # Redirect to the transaction list
   template = loader.get_template('edit.html')
   context = {'transaction' : transaction,
              'current_user_id' : user_data['current_user_id'],
-             'current_user_name' : user_data['current_user_name']}
+             'current_user_name' : user_data['current_user_name'],
+             'user_accounts': user_accounts,}
   
   return HttpResponse(template.render(context,request))
 
@@ -233,6 +243,53 @@ def userAccounts(request):
        'user_accounts': user_accounts,
     }
     return HttpResponse(template.render(context, request))
+
+
+# -== Dashboard ==-
+
+def calculate_total_balance(user_id):
+
+  income_sum = Income.objects.filter(transactions_ptr_id__idUser=user_id).aggregate(Sum('value'))['value__sum'] or 0
+  expense_sum = Expense.objects.filter(transactions_ptr_id__idUser=user_id).aggregate(Sum('value'))['value__sum'] or 0
+  difference = income_sum - expense_sum
+  
+  return difference
+
+def calculate_monthly_balance(user_id):
+  current_date = datetime.now()
+
+  first_day_of_month = current_date.replace(day=1)
+  last_day_of_month = first_day_of_month.replace(month=first_day_of_month.month + 1, day=1) - timedelta(days=1)
+
+  income_sum = Income.objects.filter(transactions_ptr_id__creationDate__range=(first_day_of_month, last_day_of_month),transactions_ptr_id__idUser=user_id).aggregate(Sum('value'))['value__sum'] or 0
+  expense_sum = Expense.objects.filter(transactions_ptr_id__creationDate__range=(first_day_of_month, last_day_of_month),transactions_ptr_id__idUser=user_id).aggregate(Sum('value'))['value__sum'] or 0
+  difference = income_sum - expense_sum
+  
+  context = {
+       'difference' : difference,
+       'income_sum' : income_sum,
+       'expense_sum' : expense_sum}
+  
+  return (context)
+
+@login_required
+def dashboard(request):
+  user_data = userData(request)
+  
+  monthly_balance = calculate_monthly_balance(user_data['current_user_id'])
+  total_balance = calculate_total_balance(user_data['current_user_id'])
+  
+  template = loader.get_template('dashboard.html')
+  context = {
+    'current_user_id' : user_data['current_user_id'],
+    'current_user_name' : user_data['current_user_name'],
+    'total_balance' : total_balance,
+    'monthly_balance' : monthly_balance['difference'],
+    'monthly_expense' : monthly_balance['expense_sum'],
+    'monthly_income' : monthly_balance['income_sum']
+  }
+  
+  return HttpResponse(template.render(context, request))
 
 def testing(request):
   template = loader.get_template('template.html')

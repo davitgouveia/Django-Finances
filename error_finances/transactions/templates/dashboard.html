@@ -1,15 +1,23 @@
 {% extends 'master_transactions.html' %}
 
 {% block title %}
-  Save Savvy - Transações
+  Save Savvy - Dashboard
 {% endblock %}
 
 {% block content %}
-  <h1>Transações do Usuário</h1>
-  <button onClick="location.href='/transactions/create'" type="button">Criar Transações</button>
-  <button onClick="location.href='/transactions/dashboard'" type="button">Dashboard</button>
+  <h1>Dashboard</h1>
+  <button onClick="location.href='/transactions'" type="button">Transações</button>
   <button onClick="location.href='/transactions/accounts'" type="button">Contas</button>
   <p>Lista de transações:</p>
+
+  <h3>Monthly Expenses</h3>
+  <p>{{monthly_expense}}</p>
+  <h3>Monthly Incomes</h3>
+  <p>{{monthly_income}}</p>
+  <h3>Total Balance</h3>
+  <p>{{total_balance}}</p>
+  <h3>Monthly Balance</h3>
+  <p>{{monthly_balance}}</p>
   <ul>
     {% for y in user_transactions %}
       <li>
@@ -20,15 +28,6 @@
           Data: {{ y.creationDate }}
         </a>
         <br><br>
-      </li>
-    {% endfor %}
-  </ul>
-  <h1>Transações</h1>
-  <p>Lista de transações</p>
-  <ul>
-    {% for x in all_transactions %}
-      <li>
-        <a href="details/{{ x.id }}">{{ x.transactionName }}, {{ x.value }}, {{ x.category }}</a>
       </li>
     {% endfor %}
   </ul>
