@@ -1,7 +1,7 @@
 {% extends 'master_transactions.html' %}
 
 {% block title %}
-  Error Finances - Detalhes
+  Save Savvy - Criar Transação
 {% endblock %}
 
 {% block content %}
@@ -94,6 +94,7 @@
   var StatusSelect = document.getElementById('status');
   
   function updateStatusOptions() {
+    
       if (expenseCheckbox.checked) {
           // Show options with values 3 and 4
           for (var i = 0; i < StatusSelect.options.length; i++) {
@@ -123,6 +124,8 @@
               break;
           }
       }
+
+      
   }
   
   expenseCheckbox.addEventListener('change', updateStatusOptions);

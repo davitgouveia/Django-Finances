@@ -89,6 +89,7 @@ nav img {
 .right-container {
     background-color: #1F2A3F;
     flex-direction: column;
+    padding-left: 1em;
     justify-content: flex-start;
     color: white;
     margin-left: 282px;

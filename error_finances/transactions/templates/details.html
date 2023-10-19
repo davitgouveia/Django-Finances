@@ -1,14 +1,13 @@
 {% extends 'master_transactions.html' %}
 
 {% block title %}
-  Error Finances - Detalhes
+  Save Savvy - Detalhes
 {% endblock %}
 
 {% block content %}
-  <h1>Usuário: {{ transaction.user.first_name }}</h1>
-
-  <p>Transação: {{ transaction.transactionName }}</p>
+  <h1>Transação: {{ transaction.transactionName }}</h1>
   <p> Valor: R$ {{ transaction.value }}
+  <p> Descrição: {{transaction.transactionDescription}}</p>
   <button onclick="location.href='/transactions/edit/{{transaction.id}}'" type="button">Editar</button>
   <button onclick="location.href='/transactions/delete/{{transaction.id}}'" type="button">Deletar</button>
   <p>Voltar para as <a href="/transactions">transações</a></p>

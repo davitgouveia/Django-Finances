@@ -14,6 +14,7 @@ from .models import TransactionStatus
 from .models import cnfRepeatability
 
 from .models import TransactionAccount
+from .models import TransactionAccountTypes
 
 @login_required
 def userData(request):
@@ -195,6 +196,7 @@ def editTransaction(request, id):
     transaction.save()
         
     return redirect('/transactions')  # Redirect to the transaction list
+  
   template = loader.get_template('edit.html')
   context = {'transaction' : transaction,
              'current_user_id' : user_data['current_user_id'],
@@ -228,8 +230,6 @@ def get_user_accounts(user_id):
   user_accounts_instance = TransactionAccount.objects.filter(idUser=user_id)
   return user_accounts_instance
 
-# Create Accounts
-
 @login_required
 def userAccounts(request):
     user_data = userData(request)
@@ -244,6 +244,76 @@ def userAccounts(request):
     }
     return HttpResponse(template.render(context, request))
 
+# Create Accounts
+
+def get_account_type(type):
+  type_instance = TransactionAccountTypes.objects.get(id=type)
+  return type_instance
+
+def createAccounts(request):
+  user_data = userData(request)
+  
+  template = loader.get_template('createAccounts.html')
+  
+  if request.method == 'POST':
+    account_name = request.POST['account_name']
+    account_color = request.POST['account_color']
+    account_type = get_account_type(request.POST['account_type'])
+    
+    if account_type.id == 3:
+      account_billCloseDate = request.POST['account_billCloseDate']
+      account_billDueDate = request.POST['account_billDueDate']
+    else:
+      account_billCloseDate = 0
+      account_billDueDate = 0
+    
+    newAccount = TransactionAccount(
+      accountName = account_name,
+      accountColor = account_color,
+      type = account_type,
+      billCloseDate = account_billCloseDate,
+      billDueDate = account_billDueDate,
+      idUser = user_data['current_user_id']
+    )
+    
+    newAccount.save()
+    return redirect('/transactions/accounts')
+    
+  context = {
+     'current_user_id' : user_data['current_user_id'],
+     'current_user_name' : user_data['current_user_name'],
+  }
+    
+  return HttpResponse(template.render(context, request))
+
+# Edit Accounts
+
+def editAccounts(request, id):
+  user_data = userData(request)
+  account = TransactionAccount.objects.get(id = id)
+  
+  if request.method == 'POST':
+    color = request.POST['account_color']
+    account.accountColor = color
+    
+    if (account.type.type == "Credit"):
+      closeDate = request.POST['account_billCloseDate']
+      dueDate = request.POST['account_billDueDate']
+
+      account.billCloseDate = closeDate
+      account.billDueDate = dueDate
+    
+    
+    account.save()
+    return redirect('/transactions/accounts')
+  
+  template = loader.get_template('editAccounts.html')
+  context = {'account' : account,
+             'current_user_id' : user_data['current_user_id'],
+             'current_user_name' : user_data['current_user_name']
+             }
+  
+  return HttpResponse(template.render(context,request))
 
 # -== Dashboard ==-
 

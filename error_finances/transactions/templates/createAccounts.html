@@ -1,0 +1,50 @@
+{% extends 'master_transactions.html' %}
+
+{% block title %}
+  Save Savvy - Criar Conta
+{% endblock %}
+
+{% block content %}
+<h1>Criar Conta</h1>
+<form method="post">
+    {% csrf_token %}
+    
+    <label for="account_name">Nome da Conta:</label>
+    <input type="text" name="account_name" id="account_name" required><br>
+    <label for="account_color">Cor da Conta:</label>
+    <input type="color" name="account_color" id="account_color" value = "#00F5FF"><br>
+
+    <label for="account_type">Tipo:</label>
+      <select name="account_type" id="account_type">
+      <option value="1">Wallet</option>
+      <option value="2">Debito</option>
+      <option value="3">Credito</option>
+      </select><br>
+
+      <div id="dateFields" style="display: none;">
+        <label for="account_billCloseDate">Dia de fechamento da fatura:</label>
+        <input type="number" step="1" name="account_billCloseDate" id="account_billCloseDate"><br>
+      
+        <label for="account_billDueDate">Dia de vencimento da fatura:</label>
+        <input type="number" step="1" name="account_billDueDate" id="account_billDueDate"><br>
+      </div>
+
+    <input type="submit" value="Salvar">
+</form>
+<p>Voltar para as <a href="/transactions/">transações</a></p>
+
+<script>
+    document.getElementById('account_type').addEventListener('change', function() {
+        var selectedValue = this.value;
+        var dateFieldsContainer = document.getElementById('dateFields');
+      
+        // Check the selected value and toggle visibility of the container
+        if (selectedValue === '3') { // Credito
+          dateFieldsContainer.style.display = 'block';
+        } else {
+          dateFieldsContainer.style.display = 'none';
+        }
+      });
+</script>
+
+{% endblock %}

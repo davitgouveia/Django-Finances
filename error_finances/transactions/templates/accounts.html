@@ -6,13 +6,12 @@ Save Savvy - Transações
 
 {% block content %}
   <h1>Accounts do Usuário</h1>
-  <button onclick="location.href='/transactions/createaccount'" type="button">Create Accounts</button>
-  <h1>Accounts</h1>
-  <p>Available Accounts</p>
+  <button onclick="location.href='/transactions/accounts/create'" type="button">Criar contas</button>
+  <h2>Suas Contas</h2>
   <ul>
     {% for x in user_accounts %}
       <li>
-        <a href="editaccount/{{ x.id }}">{{ x.accountName }}, {{ x.billCloseDate }}, {{ x.billDueDate }}</a>
+        <a href="editaccounts/{{ x.id }}"><span style="color: {{ x.accountColor }}">{{ x.accountName }}</span></a>
       </li>
     {% endfor %}
   </ul>
