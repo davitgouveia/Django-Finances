@@ -1,0 +1,20 @@
+{% extends 'master_transactions.html' %}
+
+{% block title %}
+Save Savvy - Transações
+{% endblock %}
+
+{% block content %}
+  <h1>Accounts do Usuário</h1>
+  <button onclick="location.href='/transactions/accounts/create'" type="button">Criar contas</button>
+  <h2>Suas Contas</h2>
+  <ul>
+    {% for x in user_accounts %}
+      <li>
+        <a href="editaccounts/{{ x.id }}"><span style="color: {{ x.accountColor }}">{{ x.accountName }}</span></a>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <p>Voltar para as <a href="/transactions">transações</a></p>
+{% endblock %}

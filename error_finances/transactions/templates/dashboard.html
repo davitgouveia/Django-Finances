@@ -1,0 +1,34 @@
+{% extends 'master_transactions.html' %}
+
+{% block title %}
+  Save Savvy - Dashboard
+{% endblock %}
+
+{% block content %}
+  <h1>Dashboard</h1>
+  <button onClick="location.href='/transactions'" type="button">Transações</button>
+  <button onClick="location.href='/transactions/accounts'" type="button">Contas</button>
+  <p>Lista de transações:</p>
+
+  <h3>Monthly Expenses</h3>
+  <p>{{monthly_expense}}</p>
+  <h3>Monthly Earnings</h3>
+  <p>{{monthly_income}}</p>
+  <h3>Total Balance</h3>
+  <p>{{total_balance}}</p>
+  <h3>Monthly Balance</h3>
+  <p>{{monthly_balance}}</p>
+  <ul>
+    {% for y in user_transactions %}
+      <li>
+        <a href="details/{{ y.id }}">
+          Nome: {{ y.transactionName }}<br />
+          Valor: R$ {{ y.value }}<br />
+          Categoria: {{ y.category }}<br />
+          Data: {{ y.creationDate }}
+        </a>
+        <br><br>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

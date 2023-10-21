@@ -1,33 +1,36 @@
 {% extends 'master_transactions.html' %}
 
 {% block title %}
-  Error Finances - Transações
+  Save Savvy - Transações
 {% endblock %}
 
 {% block content %}
   <h1>Transações do Usuário</h1>
-  <button onclick="location.href='/transactions/create'" type="button">Criar Transações</button>
+  <button onClick="location.href='/transactions/create'" type="button">Criar Transações</button>
+  <button onClick="location.href='/transactions/dashboard'" type="button">Dashboard</button>
+  <button onClick="location.href='/transactions/accounts'" type="button">Contas</button>
   <p>Lista de transações:</p>
-  <ul>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Value</th>
+      <th>Type</th>
+      <th>Status</th>
+      <th>Account</th>
+      <th>Description</th>
+      <th>Creation Date</th>
+    </tr>
     {% for y in user_transactions %}
-      <li>
-        <a href="details/{{ y.id }}">
-          Nome: {{ y.transactionName }}<br />
-          Valor: R$ {{ y.value }}<br />
-          Categoria: {{ y.category }}<br />
-          Data: {{ y.creationDate }}
-        </a>
-        <br><br>
-      </li>
+    <tr>
+      <td><a href="details/{{y.id}}">{{ y.transactionName }}</a></td>
+      <td>{{ y.value }}</td>
+      <td>{{ y.idType }}</td>
+      <td>{{ y.idStatus }}</td>
+      <td>{{ y.idTransactionAccount.accountName }}</td>
+      <td>{{ y.transactionDescription }}</td>
+      <td>{{ y.creationDate }}</td>
+    </tr>
+  
     {% endfor %}
-  </ul>
-  <h1>Transações</h1>
-  <p>Lista de transações</p>
-  <ul>
-    {% for x in all_transactions %}
-      <li>
-        <a href="details/{{ x.id }}">{{ x.transactionName }}, {{ x.value }}, {{ x.category }}</a>
-      </li>
-    {% endfor %}
-  </ul>
+  </table>
 {% endblock %}

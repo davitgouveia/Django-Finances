@@ -2,16 +2,59 @@
 <html>
 <head>
   <title>{% block title %}{% endblock %}</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static "/master-menu/styles.css" %}">
 </head>
 <body>
-    <header style="width: 100%; background-color: #111827; color:white; padding: 1em;">
-        {% load static %}
-        <a href="/"><img src="{% static '/images/master/logo.png' %}" alt="My image"></a>
-        <p>Olá, {{ current_user_name }}</p>
-        <p><a href="/accounts/logout">Sair</a></p>
-    </header>
-{% block content %}
-{% endblock %}
-
+	<div class="top-bar"> <img src="{% static "/master-menu/logo.png" %}" alt="Logo da Página" />
+		<div class="user-info">
+			<div class="user-text">
+				<p style="color: #717171;
+                font-size: 17.486px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 16.612px; /* 95% */
+                letter-spacing: -0.35px;">Hey,&nbsp;</p>
+				<p style="color: var(--Texto, #FFF);
+                font-size: 17.486px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 16.612px;
+                letter-spacing: -0.35px;">{{ current_user_name }}</p>
+			</div>
+			<div class="user-avatar"> <img src="{% static "/master-menu/user-avatar.jpg" %}" alt="Foto do Usuário" /> </div>
+		</div>
+	</div>
+	<div class="container">
+		<nav>
+			<ul>
+				<li>
+					<a href="/transactions"><img src="{% static "/master-menu/icone1.svg" %}" alt="Ícone 1">All Bills </a>
+				</li>
+				<li>
+					<a href="#"><img src="{% static "/master-menu/icone2.svg" %}" alt="Ícone 2">Investments </a>
+				</li>
+				<li>
+					<a href="#"><img src="{% static "/master-menu/icone3.svg" %}" alt="Ícone 3">Analytics </a>
+				</li>
+				<li>
+					<a href="#"><img src="{% static "/master-menu/icone4.svg" %}" alt="Ícone 4">Reports </a>
+				</li>
+				<li>
+					<a href="#"><img src="{% static "/master-menu/icone5.svg" %}" alt="Ícone 5">Settings </a>
+				</li>
+			</ul>
+		</nav>
+		<div class="logout">
+			<a href="/accounts/logout/"><img src="{% static "/master-menu/icone6.svg" %}" alt="Ícone 5">Logout</a>
+		</div>
+	</div>
+	<div class="right-container">
+		{% block content %}
+    {% endblock %}
+		<div class="Rights">
+			<p>2023 ALL RIGHTS RESERVED</p>
+		</div>
+	</div>
 </body>
 </html>

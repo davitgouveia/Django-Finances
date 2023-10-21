@@ -1,0 +1,28 @@
+{% extends 'master_transactions.html' %}
+
+{% block title %}
+  Save Savvy - Editar Conta 
+{% endblock %}
+
+{% block content %}
+<h1>Editar {{account.accountName}}, {{account.type.type}}</h1>
+<form method="post">
+    {% csrf_token %}
+    <label for="account_color">Cor da Conta:</label>
+    <input type="color" name="account_color" id="account_color" value = "{{account.accountColor}}"><br>
+
+    {% if account.type.type == "Credit" %}
+        <div id="dateFields">
+            <label for="account_billCloseDate">Dia de fechamento da fatura:</label>
+            <input type="number" step="1" name="account_billCloseDate" id="account_billCloseDate" value="{{account.billCloseDate}}"><br>
+      
+            <label for="account_billDueDate">Dia de vencimento da fatura:</label>
+            <input type="number" step="1" name="account_billDueDate" id="account_billDueDate" value="{{account.billDueDate}}"><br>
+        </div>
+    {% endif %}
+
+    <input type="submit" value="Salvar">
+</form>
+<p>Voltar para as <a href="/transactions/accounts">contas</a></p>
+
+{% endblock %}

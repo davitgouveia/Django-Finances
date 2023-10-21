@@ -4,17 +4,48 @@ from django.conf import settings
 from django.db import migrations, models
 import django.db.models.deletion
 
-def populate_initial_data(apps, schema_editor):
-    TransactionType = apps.get_model('your_app_name', 'TransactionType')
-    TransactionStatus = apps.get_model('your_app_name', 'TransactionStatus')
-    TransactionCategory = apps.get_model('your_app_name', 'TransactionCategory')
-    TransactionAccount = apps.get_model('your_app_name', 'TransactionAccount')
-    TransactionRepeatability = apps.get_model('your_app_name', 'TransactionRepeatability')
 
-    # Create and populate instances of your models here
-    TransactionType.objects.create(name='Type1')
-    TransactionType.objects.create(name='Type2')
-    # ... Repeat for other models ...
+def insert_initial_repeatability_data(apps, schema_editor):
+    cnfRepeatability = apps.get_model('transactions', 'cnfRepeatability')  # Replace 'your_app_name' with your actual app name
+
+    repeatability_values = [
+        'Single',
+        'Daily',
+        'Weekly',
+        'Monthly',
+        'Annually',
+        'Indefinitely',
+        'Specific',
+    ]
+    
+    for value in repeatability_values:
+        cnfRepeatability.objects.create(repeatability=value)
+        
+def insert_initial_status_data(apps, schema_editor):
+    TransactionStatus = apps.get_model('transactions', 'TransactionStatus')  # Replace 'your_app_name' with your actual app name
+
+    status_values = [
+        'Active',
+        'Inactive',
+        'Paid',
+        'Not Paid',
+        'Receivable',
+        'Received',
+    ]
+    
+    for value in status_values:
+        TransactionStatus.objects.create(status=value)
+
+def insert_initial_type_data(apps, schema_editor):
+    TransactionType = apps.get_model('transactions', 'TransactionType')  # Replace 'your_app_name' with your actual app name
+
+    status_values = [
+        'Expense',
+        'Income',
+    ]
+    
+    for value in status_values:
+        TransactionType.objects.create(type=value)
 
 class Migration(migrations.Migration):
 
@@ -31,6 +62,9 @@ class Migration(migrations.Migration):
                 ('repeatability', models.CharField(max_length=15)),
             ],
         ),
+        
+        migrations.RunPython(insert_initial_repeatability_data),
+        
         migrations.CreateModel(
             name='Expense',
             fields=[
@@ -54,6 +88,9 @@ class Migration(migrations.Migration):
                 ('status', models.CharField(max_length=10)),
             ],
         ),
+        
+        migrations.RunPython(insert_initial_status_data),
+        
         migrations.CreateModel(
             name='TransactionType',
             fields=[
@@ -61,6 +98,9 @@ class Migration(migrations.Migration):
                 ('type', models.CharField(max_length=10)),
             ],
         ),
+        
+        migrations.RunPython(insert_initial_type_data),
+        
         migrations.RenameField(
             model_name='transactions',
             old_name='user',
@@ -110,12 +150,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='transactions',
             name='idCategory',
-            field=models.ForeignKey(default=1, on_delete=models.SET(1), to='transactions.transactioncategory'),
+            field=models.ForeignKey(null=True, on_delete=models.SET(1), to='transactions.transactioncategory'),
         ),
         migrations.AddField(
             model_name='transactions',
             name='idRepeatable',
-            field=models.ForeignKey(default=1, on_delete=models.SET(1), to='transactions.transactionrepeatability'),
+            field=models.ForeignKey(on_delete=models.SET(1), to='transactions.transactionrepeatability', null=True),
         ),
         migrations.AddField(
             model_name='transactions',
@@ -125,12 +165,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='transactions',
             name='idTransactionAccount',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.PROTECT, to='transactions.transactionaccount'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='transactions.transactionaccount', null=True),
         ),
         migrations.AddField(
             model_name='transactions',
             name='idType',
             field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.PROTECT, to='transactions.transactiontype'),
         ),
-        migrations.RunPython(populate_initial_data)
     ]
