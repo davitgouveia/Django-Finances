@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All bills</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <h1 style="margin-bottom: 0px;"><t>All bills</t></h1>
+    <div class="dashboard" style="padding-top: 0px;">
+<div class="left-container">
+    <div class="bubbles">
+        <div class="bubble">
+            <input type="text" placeholder="Enter with the bill name...">
+            <img src="icone_pesquisa.png" alt="Pesquisar">
+        </div>
+        <div class="bubble">
+            <img src="icone_calendario.png" alt="Calendário">
+            <select>
+                <option value="" disabled selected>Date</option>
+                <!-- Adicione opções de datas aqui -->
+            </select>
+        </div>
+        <div class="bubble">
+            <img src="icone_filtro.png" alt="Filtro">
+            <select>
+                <option value="" disabled selected>Filters</option>
+                <!-- Adicione opções de filtros aqui -->
+            </select>
+        </div>
+        <button class="add-button"><img src="adicionar.svg" alt="Add"></button>
+    </div>
+    
+    <div class="All-bills">
+        <table>
+            <tbody><tr>
+                <th>Name</th>
+                <th>Value</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Description</th>
+                <th>Date</th>
+            </tr>
+            <!-- Conteúdo da tabela aqui -->
+        </tbody></table>
+    </div>
+</div>
+    </div>
+</body>
+
+</html>

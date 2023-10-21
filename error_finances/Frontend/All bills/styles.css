@@ -1,0 +1,145 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #111827;
+    font-family: 'Jockey One', sans-serif;
+    color: var(--Texto, #FFF);
+}
+
+h1, h2 {
+    text-align: justify;
+    font-weight: 700;
+    margin-left: 5px;
+}
+
+t{
+    margin-left: 40px;
+}
+.dashboard {
+    display: flex;
+    justify-content: space-between;
+    background-color: #111827;
+    padding: 20px;
+    margin-top: -10px;
+}
+
+.left-container{
+    background-color: #111827;
+    padding: 20px;
+    border-radius: 17.486px;
+    margin-top: 20px;
+}
+
+.left-container{
+    width: 100%; 
+}
+
+.right-container {
+    width: 250px;
+}
+
+.bubbles {
+    display: flex;
+    justify-content: space-between;
+}
+
+.bubble {
+    background-color: #1F2A3F;
+    border-radius: 17.486px;
+    text-align: left;
+    width: 26%;
+    font-weight: 1000;
+    line-height: 39.612px;
+    letter-spacing: -0.262px;
+    font-size: 15px;
+    position: relative;
+    padding: 7px;
+}
+
+.bubble d {
+    font-weight: 785;
+    height: 80px;
+    font-size: 36px;
+}
+
+.bubble input,
+.bubble select {
+    background-color: transparent;
+    border: none;
+    color: #999;
+    font-size: 13.989px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16.612px;
+    letter-spacing: -0.28px;
+    width: calc(100% - 25px); /* Ajusta a largura para dar espaço ao ícone */
+    margin-bottom: 10px; /* Adicione espaçamento entre os campos */
+}
+
+.bubble img {
+    width: 20px; /* Ajusta o tamanho do ícone conforme necessário */
+    height: auto;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%); /* Centraliza verticalmente o ícone */
+}
+
+.All-bills{
+    background-color: #1F2A3F;
+    border-radius: 17.486px;
+}
+
+.All-bills table {
+    width: 100%;
+    color: var(--Texto);
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.All-bills th,
+.All-bills td {
+    border: 1px solid var(--Texto);
+    padding: 10px;
+    text-align: left;
+}
+
+.show-all-button,
+.add-button {
+    width: 190px;
+    height: 52.458px;
+    border-radius: 17.486px;
+    background-color: #0059E0;
+    color: var(--Texto);
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.add-button img {
+    height: 25px; 
+}
+
+
+.reminders {
+    max-height: 88.305px;
+    overflow-y: auto;
+    margin-top: 10px;
+}
+
+.reminders .reminder {
+    background-color: #1F2A3F;
+    width: 180.981px;
+    height: 88.305px;
+    border-radius: 17.486px;
+    margin-bottom: 10px;
+}
+
+.reminders .reminder:last-child {
+    margin-bottom: 0;
+}
+
+
+
+
+

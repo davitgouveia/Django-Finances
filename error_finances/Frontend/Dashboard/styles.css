@@ -1,0 +1,149 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #111827;
+    font-family: 'Jockey One', sans-serif;
+    color: var(--Texto, #FFF);
+}
+
+h1, h2 {
+    text-align: justify;
+    font-weight: 700;
+    margin-left: 5px;
+}
+
+t{
+    margin-left: 40px;
+}
+.dashboard {
+    display: flex;
+    justify-content: space-between;
+    background-color: #111827;
+    padding: 20px;
+    margin-top: -10px;
+}
+
+.left-container,
+.right-container {
+    background-color: #111827;
+    padding: 20px;
+    border-radius: 17.486px;
+    margin-top: 20px;
+}
+
+.left-container{
+    width: 80%; 
+}
+
+.right-container {
+    width: 250px;
+}
+
+.bubbles {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.bubble {
+    background-color: #1F2A3F;
+    border-radius: 17.486px;
+    padding: 17px;
+    text-align: justify;
+    width: 27%;
+    margin-bottom: 20px;
+    font-weight: 1000;
+    line-height: 39.612px;
+    letter-spacing: -0.262px;
+    height: 80px;
+    font-size: 15px;
+} 
+
+.bubble d {
+    font-weight: 785;
+    height: 80px;
+    font-size: 36px;
+}
+
+.latest-bills{
+    background-color: #1F2A3F;
+    border-radius: 17.486px;
+}
+
+.latest-bills table {
+    width: 100%;
+    color: var(--Texto);
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.latest-bills th,
+.latest-bills td {
+    border: 1px solid var(--Texto);
+    padding: 10px;
+    text-align: left;
+}
+
+.show-all-button,
+.add-button {
+    width: 100%;
+    height: 52.458px;
+    border-radius: 17.486px;
+    background-color: #0059E0;
+    color: var(--Texto);
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+.add-button img {
+    height: 25px; 
+}
+
+.right-container img {
+    width: 100%;
+    border-radius: 17.486px;
+}
+
+.reminders {
+    max-height: 88.305px;
+    overflow-y: auto;
+    margin-top: 10px;
+}
+
+.reminders .reminder {
+    background-color: #1F2A3F;
+    width: 180.981px;
+    height: 88.305px;
+    border-radius: 17.486px;
+    margin-bottom: 10px;
+}
+
+.reminders .reminder:last-child {
+    margin-bottom: 0;
+}
+
+
+/* @media queries para ajustar o tamanho das bolhas em telas menores */
+@media screen and (max-width: 1018px) {
+    .bubble {
+        width: 100%; 
+        font-size: 13px;
+    }
+    .bubble d {
+        font-weight: 785;
+        height: 80px;
+        font-size: 30px;
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .bubble {
+        width: 100%; 
+    }
+}
+
+
+
+
