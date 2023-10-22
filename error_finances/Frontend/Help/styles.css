@@ -7,7 +7,6 @@ body {
 }
 
 h1, h2 {
-    text-align: justify;
     font-weight: 700;
     margin-left: 5px;
 }
@@ -37,32 +36,6 @@ t{
 
 .right-container {
     width: 250px;
-}
-
-.bubbles {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-}
-
-.bubble {
-    background-color: #1F2A3F;
-    border-radius: 17.486px;
-    padding: 17px;
-    text-align: justify;
-    width: 27%;
-    margin-bottom: 20px;
-    font-weight: 1000;
-    line-height: 39.612px;
-    letter-spacing: -0.262px;
-    height: 80px;
-    font-size: 15px;
-} 
-
-.bubble d {
-    font-weight: 785;
-    height: 80px;
-    font-size: 36px;
 }
 
 .latest-bills{
@@ -124,18 +97,9 @@ t{
     margin-bottom: 0;
 }
 
-
-
 .container {
     display: flex;
     justify-content: space-around;
-}
-
-.white-container,
-.blue-container {
-    width: 45%;
-    padding: 20px;
-    border-radius: 10px;
 }
 
 .blue-container a{
@@ -206,23 +170,24 @@ button:hover {
 
 
 /* @media queries para ajustar o tamanho das bolhas em telas menores */
-@media screen and (max-width: 1018px) {
-    .bubble {
-        width: 100%; 
-        font-size: 13px;
+@media screen and (max-width: 860px) {
+    .container {
+        flex-wrap: wrap;
     }
-    .bubble d {
-        font-weight: 785;
-        height: 80px;
-        font-size: 30px;
+    .right-container {
+        display: none;
     }
+
+    input{
+        width: 100%;
+    }
+
+    button{
+        right: -22px;
+    }
+
 }
 
-@media screen and (max-width: 720px) {
-    .bubble {
-        width: 100%; 
-    }
-}
 
 
 
