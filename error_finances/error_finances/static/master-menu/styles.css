@@ -87,16 +87,15 @@ nav img {
 
 /* Right-container */
 .right-container {
-    background-color: #1F2A3F;
     flex-direction: column;
     padding-left: 1em;
-    justify-content: flex-start;
     color: white;
     margin-left: 282px;
     margin-right: 25px;
     margin-top: -85px;
     overflow-y: scroll;
     height: 85vh;
+    width: 100%;
 }
 
 .right-container a {

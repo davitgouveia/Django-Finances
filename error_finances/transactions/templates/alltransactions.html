@@ -5,32 +5,70 @@
 {% endblock %}
 
 {% block content %}
-  <h1>Transações do Usuário</h1>
-  <button onClick="location.href='/transactions/create'" type="button">Criar Transações</button>
-  <button onClick="location.href='/transactions/dashboard'" type="button">Dashboard</button>
-  <button onClick="location.href='/transactions/accounts'" type="button">Contas</button>
-  <p>Lista de transações:</p>
-  <table>
-    <tr>
-      <th>Name</th>
-      <th>Value</th>
-      <th>Type</th>
-      <th>Status</th>
-      <th>Account</th>
-      <th>Description</th>
-      <th>Creation Date</th>
-    </tr>
-    {% for y in user_transactions %}
-    <tr>
-      <td><a href="details/{{y.id}}">{{ y.transactionName }}</a></td>
-      <td>{{ y.value }}</td>
-      <td>{{ y.idType }}</td>
-      <td>{{ y.idStatus }}</td>
-      <td>{{ y.idTransactionAccount.accountName }}</td>
-      <td>{{ y.transactionDescription }}</td>
-      <td>{{ y.creationDate }}</td>
-    </tr>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% load static %}
+  <link rel="stylesheet" href="{% static "/transactions/alltransactions/styles/styles.css" %}">
+</head>
+
+<body>
+  <h1 style="margin-bottom: 0px;"><t>All Transactions</t></h1>
+  <div class="dashboard" style="padding-top: 0px;">
+<div class="left-container">
+  <div class="bubbles">
+      <div class="bubble">
+          <input type="text" placeholder="Enter with the bill name...">
+          <img src="{% static "/transactions/alltransactions/images/icone_pesquisa.png" %}" alt="Pesquisar">
+      </div>
+      <div class="bubble">
+          <img src="{% static "/transactions/alltransactions/images/icone_calendario.png" %}" alt="Calendário">
+          <select>
+              <option value="" disabled selected>Date</option>
+              <!-- Adicione opções de datas aqui -->
+          </select>
+      </div>
+      <div class="bubble">
+          <img src="{% static "/transactions/alltransactions/images/icone_filtro.png" %}" alt="Filtro">
+          <select>
+              <option value="" disabled selected>Filters</option>
+              <!-- Adicione opções de filtros aqui -->
+          </select>
+      </div>
+      <button class="add-button" onclick="location.href='/transactions/create'"><img src="{% static "/transactions/alltransactions/images/adicionar.svg" %}" alt="Add"></button>
+  </div>
   
-    {% endfor %}
-  </table>
+  <div class="All-bills">
+      <table>
+          <tbody><tr>
+              <th>Name</th>
+              <th>Value</th>
+              <th>Type</th>
+              <th>Status</th>
+              <th>Description</th>
+              <th>Date</th>
+          </tr>
+          <!-- Conteúdo da tabela aqui -->
+          {% for y in user_transactions %}
+          <tr>
+            <td><a href="details/{{y.id}}">{{ y.transactionName }}</a></td>
+            <td>{{ y.value }}</td>
+            <td>
+              {% if y.idType.type == "Expense" %}
+              <span style="color: #D20909">{{ y.idType }}</span>
+              {% endif %}
+              {% if y.idType.type == "Income" %}
+              <span style="color: #12E700">{{ y.idType }}</span>
+              {% endif %}
+            </td>
+            <td>{{ y.idStatus }}</td>
+            <td>{{ y.transactionDescription }}</td>
+            <td>{{ y.creationDate }}</td>
+          </tr>
+        
+          {% endfor %}
+      </tbody></table>
+  </div>
+</div>
+  </div>
+</body>
 {% endblock %}
