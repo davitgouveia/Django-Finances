@@ -5,6 +5,26 @@ body {
     font-family: Arial, sans-serif;
 }
 
+.navbar{
+    position: fixed;
+    width: 100%;
+}
+
+.navbar img{
+    max-width: 90px;
+}
+
+.navbar li{
+    margin-top: 30px;
+}
+
+.navbar p{
+    margin-right: 15px;
+    font-style: normal;
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+}
 /* top-bar */
 .top-bar {
     display: flex;
@@ -25,7 +45,7 @@ body {
     overflow: hidden;
     margin-left: 10px;
 }
-img {
+.top-bar img {
     max-width: 173px;
     height: auto;
     margin: 20px;
@@ -36,12 +56,26 @@ img {
     height: 100%;
     object-fit: cover;
     margin: 0px;
+    margin-left: 0px;
 }
 .user-text {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     margin-right: 10px;
 }
+
+.value p{
+    background-color: #1F2A3F;
+    padding: 6px;
+    border-radius: 6px;
+    margin-right: 15px;
+    font-style: normal;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 18px;
+    font-weight: 700;
+}
+
 
 /* left-container */
 .container {
@@ -55,6 +89,14 @@ img {
     position: absolute;
     height: -webkit-fill-available;
 }
+
+.container img {
+    max-width: 173px;
+    height: auto;
+    margin: 20px;
+    margin-left: 10px;
+}
+
 nav ul {
     list-style: none;
     padding: 0;
@@ -87,25 +129,18 @@ nav img {
 
 /* Right-container */
 .right-container {
-    flex-direction: column;
-    padding-left: 1em;
     color: white;
     margin-left: 282px;
     margin-right: 25px;
-    margin-top: -85px;
-    overflow-y: scroll;
-    height: 85vh;
-    width: 100%;
+    margin-top: -75px;
 }
-
 .right-container a {
-    color: white;
+    color: #fff;
+    text-decoration: none;
 }
-
 
 /* Rights */
 .Rights {
-    position: absolute;
     bottom: 10px;
     color: #8F8F8F;
     font-size: 13.978px;
@@ -114,4 +149,36 @@ nav img {
     line-height: 19.22px;
     letter-spacing: -0.28px;
     margin-top: auto;
+}
+
+@media (max-width: 768px) {
+    .container {
+        display: none;
+    }
+}
+
+@media (min-width: 768px) {
+    .navbar {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .logo img {
+        display: none;
+    }
+    .right-container {
+      margin-left: 0px;
+      margin-right: 0px;
+      margin-top: -60px;
+    }
+    .value p{
+        display: none;
+    }
+    
+    .user-info {
+        margin-top: 80px;
+    }
+    
 }
