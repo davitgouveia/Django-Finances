@@ -19,7 +19,6 @@ t{
     display: flex;
     justify-content: space-between;
     background-color: #111827;
-    padding: 20px;
     margin-top: -10px;
 }
 
@@ -90,6 +89,10 @@ t{
     border-radius: 17.486px;
 }
 
+.All-bills tbody{
+
+}
+
 .All-bills table {
     width: 100%;
     color: var(--Texto);
@@ -99,10 +102,11 @@ t{
 
 .All-bills th,
 .All-bills td {
-    border: 1px solid var(--Texto);
-    padding: 10px;
-    text-align: left;
-}
+        border: 1px solid var(--Texto);
+        padding-top: 10px;
+        padding-bottom: 10px;
+        text-align: center;
+    }
 
 .show-all-button,
 .add-button {
@@ -140,6 +144,24 @@ t{
 }
 
 
+@media (max-width: 768px) {
+    .bubbles {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .bubble {
+        margin-left: 50px;
+        margin-top: 20px;
+    }
+
+    .add-button {
+        width: 30%;
+        margin-top: 20px;
+        margin-left: 50px;
+    }
+}
 
 
 
