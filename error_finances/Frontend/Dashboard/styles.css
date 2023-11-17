@@ -19,23 +19,22 @@ t{
     display: flex;
     justify-content: space-between;
     background-color: #111827;
-    padding: 20px;
     margin-top: -10px;
 }
 
-.left-container,
-.right-container {
+.left-container-db,
+.right-container-db {
     background-color: #111827;
     padding: 20px;
     border-radius: 17.486px;
     margin-top: 20px;
 }
 
-.left-container{
-    width: 80%; 
+.left-container-db{
+    width: 90%; 
 }
 
-.right-container {
+.right-container-db {
     width: 250px;
 }
 
@@ -80,8 +79,10 @@ t{
 .latest-bills th,
 .latest-bills td {
     border: 1px solid var(--Texto);
-    padding: 10px;
-    text-align: left;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        text-align: center;
+        font-weight: normal;
 }
 
 .show-all-button,
@@ -101,7 +102,7 @@ t{
     height: 25px; 
 }
 
-.right-container img {
+.right-container-db img {
     width: 100%;
     border-radius: 17.486px;
 }
@@ -144,6 +145,11 @@ t{
     }
 }
 
+@media (max-width: 768px) {
+    .right-container-db {
+        display: none;
+    }
+}
 
 
 
