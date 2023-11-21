@@ -6,7 +6,7 @@ body {
 
 .container {
     display: flex;
-    height: 100vh;
+    height: 120vh;
 }
 
 .left-container {
@@ -38,7 +38,7 @@ body {
 
 .welcome {
     margin-bottom: 50px;
-    margin-top: 30%;
+    margin-top: 27%;
     font-size: 1.8em;
 }
 
@@ -179,4 +179,22 @@ input[type="password"] {
     line-height: 19.22px;
     letter-spacing: -0.28px;
     margin-top: auto;
+}
+
+@media (max-width: 768px) {
+    .left-container{
+        display: none;
+    }
+    .right-container{
+        width: 100%;
+        justify-content: space-evenly;
+    }
+       
+    .welcome{
+        margin-top: 0%;
+    }
+    .Rights {
+        margin-top: 0;
+    }
+
 }
