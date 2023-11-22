@@ -172,10 +172,14 @@ Rbutton {
 
 @media screen and (max-width: 860px) {
 
-    /*.right-container-st {
-        display: none;
-    }*/
+    .Container-st {
+        flex-direction: column-reverse;
+    }
 
+    .right-container-st {
+        width: auto;
+        
+    }
 }
 
 
