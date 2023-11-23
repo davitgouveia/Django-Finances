@@ -14,7 +14,6 @@ body {
     background-color: #111427;
     color: white;
     padding: 20px;
-    text-align: center;
 }
 
 .left-container img {
@@ -24,6 +23,10 @@ body {
     margin: 0 auto;
     margin-left: 15%;
     margin-top: 15%;
+}
+
+.banner img{
+    max-width: 60%;
 }
 
 .right-container {
@@ -73,6 +76,10 @@ body {
 }
 
 .black-icon {
+    color: black; 
+}
+
+.bi-eye-slash{
     color: black; 
 }
 

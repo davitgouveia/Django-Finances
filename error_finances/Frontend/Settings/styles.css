@@ -68,6 +68,22 @@ a{
     width: fit-content;
 }
 
+.delete-bubble {
+    display: flex;
+    align-items: center;
+    border-color: #B10707;
+    color:#D20909;
+    border-radius: 15px;
+    padding: 15px;
+    width: fit-content;
+    border: 1px solid;
+}
+
+.delete-bubble a {
+    color:#B10707;
+}
+
+
 
 .black-icon {
     color: #00F5FF;
@@ -85,6 +101,7 @@ input{
     background-color: transparent;
     width: 100%;
     border: none;
+    color: white;
 }
 
 /*---------------------------------------*/
@@ -156,10 +173,14 @@ Rbutton {
 
 @media screen and (max-width: 860px) {
 
-    /*.right-container-st {
-        display: none;
-    }*/
+    .Container-st {
+        flex-direction: column-reverse;
+    }
 
+    .right-container-st {
+        width: auto;
+        
+    }
 }
 
 
