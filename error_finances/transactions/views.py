@@ -98,7 +98,7 @@ def createTransaction(request):
         
         
         color, category_name = category.split('/', 1)
-        category_id = get_or_create_category(user_data['current_user_id'], category, color)
+        category_id = get_or_create_category(user_data['current_user_id'], category_name, color)
 
         # Create transaction
         if ('expense' in request.POST):
@@ -185,7 +185,7 @@ def editTransaction(request, id):
     account = TransactionAccount.objects.get(id=account_id)
     
     color, category_name = category.split('/', 1)
-    category_id = get_or_create_category(user_data['current_user_id'], category, color)
+    category_id = get_or_create_category(user_data['current_user_id'], category_name, color)
         
     transaction.transactionName = name
     transaction.transactionDescription = description

@@ -19,23 +19,18 @@ t{
     display: flex;
     justify-content: space-between;
     background-color: #111827;
-    padding: 20px;
     margin-top: -10px;
 }
 
-.left-container{
+.left-container-allbills{
     background-color: #111827;
     padding: 20px;
     border-radius: 17.486px;
     margin-top: 20px;
 }
 
-.left-container{
+.left-container-allbills{
     width: 100%; 
-}
-
-.right-container {
-    width: auto;
 }
 
 .bubbles {
@@ -54,6 +49,10 @@ t{
     font-size: 15px;
     position: relative;
     padding: 7px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-direction: row-reverse;
 }
 
 .bubble d {
@@ -79,16 +78,64 @@ t{
 .bubble img {
     width: 20px; /* Ajusta o tamanho do ícone conforme necessário */
     height: auto;
-    position: absolute;
     top: 50%;
     right: 10px;
     transform: translateY(-50%); /* Centraliza verticalmente o ícone */
 }
 
+
+.bubblesh {
+    background-color: #1F2A3F;
+    border-radius: 17.486px;
+    text-align: left;
+    width: 26%;
+    font-weight: 1000;
+    line-height: 39.612px;
+    letter-spacing: -0.262px;
+    font-size: 15px;
+    position: relative;
+    padding: 7px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-direction: row-reverse;
+}
+
+.bubblesh d {
+    font-weight: 785;
+    height: 80px;
+    font-size: 36px;
+}
+
+.bubblesh input,
+.bubblesh select {
+    background-color: transparent;
+    border: none;
+    color: #999;
+    font-size: 13.989px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16.612px;
+    letter-spacing: -0.28px;
+    width: calc(100% - 25px); /* Ajusta a largura para dar espaço ao ícone */
+    margin-bottom: 10px; /* Adicione espaçamento entre os campos */
+}
+
+.bubblesh img {
+    width: 20px; /* Ajusta o tamanho do ícone conforme necessário */
+    height: auto;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%); /* Centraliza verticalmente o ícone */
+}
+
+
+
 .All-bills{
     background-color: #1F2A3F;
     border-radius: 17.486px;
 }
+
 
 .All-bills table {
     width: 100%;
@@ -99,11 +146,12 @@ t{
 
 .All-bills th,
 .All-bills td {
-    border: 1px solid var(--Texto);
-    padding: 10px;
-    text-align: left;
-    word-wrap: break-word; /* Allow long content to wrap */
-}
+        border: 1px solid var(--Texto);
+        padding-top: 10px;
+        padding-bottom: 10px;
+        text-align: center;
+        font-weight: normal;
+    }
 
 .show-all-button,
 .add-button {
@@ -140,7 +188,96 @@ t{
     margin-bottom: 0;
 }
 
+/*All transactions list*/
+#list-container {
+    background-color: #111827;
+    color:#FFF;
+    
+}
 
+#list-item {
+    background-color: #1F2A3F;
+    margin-top: 0.5em;
+    border-radius: 15px;
+    color:#FFF;
+    height: 4.5em;
+}
+
+.col {
+    overflow: hidden;
+}
+
+#icon {
+    border-radius: 50%; font-size: 35px;
+}
+
+.title {
+    margin: 0;
+    padding: 0;
+    font-size: x-large;
+    font-weight: 600;
+    white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+        display: inline-block;
+}
+
+.info {
+    margin: 0;
+    padding:0;
+    font-size: small;
+    white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+        display: inline-block;
+}
+
+.value {
+    margin: 0;
+    padding: 0;
+    font-size:medium;
+    font-weight: 600;
+}
+
+#value-col {
+    min-width: 7em;
+}
+
+.status {
+    margin: 0;
+    padding: 0;
+}
+
+
+
+@media (max-width: 768px) {
+    .bubbles {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .bubble {
+        margin-top: 20px;
+    }
+
+    .bubblesh {
+        width: 100%;
+        padding-top: 17px;
+    }
+
+    .add-button {
+        width: 30%;
+        margin-top: 20px;
+    }
+
+    .title {
+        font-size: medium;
+        margin-top: 1em;
+    }
+}
 
 
 

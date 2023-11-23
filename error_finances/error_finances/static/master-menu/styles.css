@@ -1,8 +1,8 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #111827;
     font-family: Arial, sans-serif;
+    overflow-y: hidden;
 }
 
 .navbar{
@@ -78,7 +78,7 @@ body {
 
 
 /* left-container */
-.container {
+.left-container {
     margin: 35px;
     margin-top: 0px;
     background-color: #1F2A3F;
@@ -90,7 +90,7 @@ body {
     height: -webkit-fill-available;
 }
 
-.container img {
+.left-container img {
     max-width: 173px;
     height: auto;
     margin: 20px;
@@ -110,8 +110,14 @@ nav a {
     display: flex;
     align-items: center;
 }
+
 nav img {
     margin-left: 10px;
+}
+
+.nav-item img {
+    margin-left: 30px;
+    margin-right: 10px;
 }
 .logout {
     position: absolute;
@@ -132,7 +138,9 @@ nav img {
     color: white;
     margin-left: 282px;
     margin-right: 25px;
-    margin-top: -75px;
+    margin-top: -65px;
+    height: 82vh;
+    overflow-y: scroll;
 }
 .right-container a {
     color: #fff;
@@ -141,6 +149,8 @@ nav img {
 
 /* Rights */
 .Rights {
+    display: flex;
+    justify-content: center;
     bottom: 10px;
     color: #8F8F8F;
     font-size: 13.978px;
@@ -148,11 +158,11 @@ nav img {
     font-weight: 600;
     line-height: 19.22px;
     letter-spacing: -0.28px;
-    margin-top: auto;
+    margin-top: 1em;
 }
 
 @media (max-width: 768px) {
-    .container {
+    .left-container {
         display: none;
     }
 }
@@ -181,4 +191,14 @@ nav img {
         margin-top: 80px;
     }
     
+}
+
+::-webkit-scrollbar {
+    width: 4px; /* Set the width of the scrollbar */
+}
+
+
+::-webkit-scrollbar-thumb {
+    background-color: #1f2a3fbb; /* Set the color of the thumb */
+    border-radius: 6px; /* Optional: Set border radius for a rounded thumb */
 }
