@@ -5,30 +5,49 @@
 {% endblock %}
 
 {% block content %}
-  <h1>Dashboard</h1>
-  <button onClick="location.href='/transactions'" type="button">Transações</button>
-  <button onClick="location.href='/transactions/accounts'" type="button">Contas</button>
-  <p>Lista de transações:</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% load static %}
+    <link rel="stylesheet" href="{% static '/dashboard/styles.css' %}" />
+  </head>
 
-  <h3>Monthly Expenses</h3>
-  <p>{{monthly_expense}}</p>
-  <h3>Monthly Earnings</h3>
-  <p>{{monthly_income}}</p>
-  <h3>Total Balance</h3>
-  <p>{{total_balance}}</p>
-  <h3>Monthly Balance</h3>
-  <p>{{monthly_balance}}</p>
-  <ul>
-    {% for y in user_transactions %}
-      <li>
-        <a href="details/{{ y.id }}">
-          Nome: {{ y.transactionName }}<br />
-          Valor: R$ {{ y.value }}<br />
-          Categoria: {{ y.category }}<br />
-          Data: {{ y.creationDate }}
-        </a>
-        <br><br>
-      </li>
-    {% endfor %}
-  </ul>
+  <body>
+    <h1 style="
+    margin-bottom: 0px;
+"><t>Dashboard</t></h1>
+    <div class="dashboard" style="
+    padding-top: 0px;
+">
+      <div class="left-container-db">
+        <div class="bubbles">
+          <div class="bubble">
+            Monthly expenses<br /><d>R$ {{ monthly_expense }}</d>
+          </div>
+          <div class="bubble">
+            Monthly earnings<br /><d>R$ {{ monthly_income }}</d>
+          </div>
+          <div class="bubble">
+            Monthly Balance<br /><d>R$ {{ monthly_balance }}</d>
+          </div>
+          <div class="bubble">
+            Total Balance<br /><d>R$ {{ total_balance }}</d>
+          </div>
+        </div>
+        <h2>Graphs</h2>
+        <div class="graphs-container">
+          <!-- Graficos -->
+          <img src="https://www.jaspersoft.com/sites/jaspersoft/files/2023-09/pie-chart-example.svg">
+        </div>
+      </div>
+      <div class="right-container-db">
+        <img src="{% static '/dashboard/ads.jpeg' %}" alt="Ads" />
+        <h2>Reminders</h2>
+        <div class="reminders">
+          <!-- Conteúdo das bolhas de lembretes aqui -->
+        </div>
+        <button class="add-button"><img src="{% static '/dashboard/adicionar.svg' %}" alt="Add" /></button>
+      </div>
+    </div>
+  </body>
 {% endblock %}

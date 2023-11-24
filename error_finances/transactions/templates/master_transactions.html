@@ -14,7 +14,7 @@
 
 	<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #1F2A3F;">
 		<img src="{% static "/master-menu/logo.png" %}" alt="Logo da Página" />
-		<p style="margin-bottom: 0px;">R$ 3800,00</p>
+		<p style="margin-bottom: 0px;">R$ {{total_balance}}</p>
 
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
 			aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,13 +23,13 @@
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item">
-					<a href="/transactions"><img src="{% static "/master-menu/icone1.svg" %}" alt="Ícone 1">All Bills </a>
+					<a href="/transactions"><img src="{% static "/master-menu/icone1.svg" %}" alt="Ícone 1">All Transactions </a>
 				</li>
 				<li class="nav-item">
 					<a href="#"><img src="{% static "/master-menu/icone2.svg" %}" alt="Ícone 2">Investments </a>
 				</li>
 				<li class="nav-item">
-					<a href="#"><img src="{% static "/master-menu/icone3.svg" %}" alt="Ícone 3">Analytics </a>
+					<a href="/transactions/dashboard"><img src="{% static "/master-menu/icone3.svg" %}" alt="Ícone 3">Dashboard </a>
 				</li>
 				<li class="nav-item">
 					<a href="#"><img src="{% static "/master-menu/icone4.svg" %}" alt="Ícone 4">Reports </a>
@@ -38,7 +38,7 @@
 					<a href="#"><img src="{% static "/master-menu/icone5.svg" %}" alt="Ícone 5">Settings </a>
 				</li>
 				<li class="nav-item">
-					<a href="#"><img src="icone6.svg" alt="Ícone 5">Logout</a>
+					<a href="/accounts/logout"><img src="{% static "/master-menu/icone6.svg" %}" alt="Ícone 6">Logout</a>
 				</li>
 			</ul>
 		</div>
@@ -50,7 +50,7 @@
 		<div class="user-info">
 			<div class="user-text">
 				<div class="value">
-					<p>R$ 3800,00</p>
+					<p>R$ {{total_balance}}</p>
 				</div>
 				<p style="color: #717171;
                 font-size: 17.486px;
@@ -63,7 +63,7 @@
                 font-style: normal;
                 font-weight: 700;
                 line-height: 16.612px;
-                letter-spacing: -0.35px;">Usuário</p>
+                letter-spacing: -0.35px;">{{current_user_name}}</p>
 			</div>
 			<div class="user-avatar"> <img src="{% static "/master-menu/user-avatar.jpg" %}" alt="Foto do Usuário" /> </div>
 		</div>
@@ -74,13 +74,13 @@
 		<nav>
 			<ul>
 				<li>
-					<a href="/transactions"><img src="{% static "/master-menu/icone1.svg" %}" alt="Ícone 1">All Bills </a>
+					<a href="/transactions"><img src="{% static "/master-menu/icone1.svg" %}" alt="Ícone 1">All Transactions </a>
 				</li>
 				<li>
 					<a href="#"><img src="{% static "/master-menu/icone2.svg" %}" alt="Ícone 2">Investments </a>
 				</li>
 				<li>
-					<a href="#"><img src="{% static "/master-menu/icone3.svg" %}" alt="Ícone 3">Analytics </a>
+					<a href="/transactions/dashboard"><img src="{% static "/master-menu/icone3.svg" %}" alt="Ícone 3">Dashboard </a>
 				</li>
 				<li>
 					<a href="#"><img src="{% static "/master-menu/icone4.svg" %}" alt="Ícone 4">Reports </a>
@@ -91,7 +91,7 @@
 			</ul>
 		</nav>
 		<div class="logout">
-			<a href="#"><img src="icone6.svg" alt="Ícone 5">Logout</a>
+			<a href="/accounts/logout"><img src="{% static "/master-menu/icone6.svg" %}" alt="Ícone 5">Logout</a>
 		</div>
 	</div>
 	<div class="right-container">

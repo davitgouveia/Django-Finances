@@ -22,10 +22,8 @@
         </div>
         <div class="bubble">
           <img src="{% static "/transactions/alltransactions/images/icone_calendario.png" %}" alt="Calendário">
-            <select>
-                <option value="" disabled selected>Date</option>
+                <input type="month" value="">
                 <!-- Adicione opções de datas aqui -->
-            </select>
         </div>
         <div class="bubble">
           <img src="{% static "/transactions/alltransactions/images/icone_filtro.png" %}" alt="Filtro">
@@ -38,7 +36,6 @@
     </div>
   
     <div class="container" id="list-container">
-      <h2>10 de Outubro</h2>
       <!--Item-->
       {% for y in user_transactions %}
       <td><a href="details/{{y.id}}"><div class="row" id="list-item">

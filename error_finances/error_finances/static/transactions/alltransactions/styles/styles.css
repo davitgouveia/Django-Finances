@@ -129,30 +129,6 @@ t{
     transform: translateY(-50%); /* Centraliza verticalmente o ícone */
 }
 
-
-
-.All-bills{
-    background-color: #1F2A3F;
-    border-radius: 17.486px;
-}
-
-
-.All-bills table {
-    width: 100%;
-    color: var(--Texto);
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-.All-bills th,
-.All-bills td {
-        border: 1px solid var(--Texto);
-        padding-top: 10px;
-        padding-bottom: 10px;
-        text-align: center;
-        font-weight: normal;
-    }
-
 .show-all-button,
 .add-button {
     width: 190px;
@@ -192,6 +168,7 @@ t{
 #list-container {
     background-color: #111827;
     color:#FFF;
+    margin-left: 0;
     
 }
 
