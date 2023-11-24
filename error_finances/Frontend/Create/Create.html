@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <form method="post">
+        <div class="title">
+          <h1>Create transaction</h1>
+        </div>
+        <div class="bubble">
+        <label for="transactionName">Transaction Name:</label>
+        <input type="text" name="transactionName" id="transactionName" required><br>
+        <label for="transactionDescription">Description:</label>
+        <input type="text" name="transactionDescription" id="transactionDescription" required><br>
+    
+        <label for="value">Value:</label>
+        <input type="number" step="0.01" name="value" id="value" required><br>
+    
+        <label for="expense">Expense:</label>
+        <input type="checkbox" name="expense" id="expense" checked="" style="
+        width: 20px;
+        height: 20px;
+        padding-bottom: 0px;
+        margin-bottom: 16px;
+    ">
+    
+        <label for="status">Status:</label>
+        <select name="status" id="status">
+            <option value="3">Paid</option>
+            <option value="4">Not Paid</option>
+            <option value="5">Received</option>
+            <option value="6">Receivable</option>
+        </select><br>
+    
+        <label for="category">Category:</label>
+        <select name="category" id="category">
+            <option value="0077b6/Home">Home</option>
+            <option value="228B22/Education">Education</option> 
+            <option value="fc7905/Leisure">Leisure</option>
+            <option value="fc0505/Restaurant">Restaurant</option>
+            <option value="009402/Health">Health</option>
+            <option value="c91e00/Groceries">Groceries</option>
+            <option value="003cc9/Transport">Transport</option>
+            <option value="02b1d4/Clothing">Clothing</option>
+        </select><br>
+    
+        <label for="account">Account:</label>
+        <select name="account" id="account" required>
+            {% for account in user_accounts %}
+            <option value="{{ account.id }}">{{ account.accountName }}</option>
+            {% endfor %}
+        </select><br>
+    
+        <label for="creationDate">Creation Date:</label>
+        <input type="date" name="creationDate" id="creationDate" value="{{current_date}}"><br>
+    
+        <div id="dueDate-container" style="display: none;">
+            <label for="dueDate">Due Date:</label>
+            <input type="date" name="dueDate" id="dueDate" value="{{current_date}}"><br>
+        </div>
+    
+        <div class="button">
+        <input type="submit" value="Save">
+        </div>
+        </div>
+    </form>
+
+    
+    <script>
+        // Status checkbox treatment
+        var expenseCheckbox = document.getElementById('expense');
+        var StatusSelect = document.getElementById('status');
+    
+        function updateStatusOptions() {
+    
+            if (expenseCheckbox.checked) {
+                // Show options with values 3 and 4
+                for (var i = 0; i < StatusSelect.options.length; i++) {
+                    var option = StatusSelect.options[i];
+                    if (option.value == '3' || option.value == '4') {
+                        option.style.display = 'block';
+                    } else {
+                        option.style.display = 'none';
+                    }
+                }
+            } else {
+                // Show options with values 5 and 6
+                for (var i = 0; i < StatusSelect.options.length; i++) {
+                    var option = StatusSelect.options[i];
+                    if (option.value == '5' || option.value == '6') {
+                        option.style.display = 'block';
+                    } else {
+                        option.style.display = 'none';
+                    }
+                }
+            }
+    
+            // Select the first visible option
+            for (var i = 0; i < StatusSelect.options.length; i++) {
+                if (StatusSelect.options[i].style.display !== 'none') {
+                    StatusSelect.selectedIndex = i;
+                    break;
+                }
+            }
+    
+    
+        }
+    
+        expenseCheckbox.addEventListener('change', updateStatusOptions);
+        // Initial update based on the checkbox state
+        updateStatusOptions();
+    
+        const dueDateContainer = document.getElementById("dueDate-container")
+    
+        function dueDateVisibility() {
+            if (StatusSelect.value == '4' || StatusSelect.value == '6') {
+                dueDateContainer.style.display = "block";
+            } else
+                dueDateContainer.style.display = "none";
+        }
+    
+        StatusSelect.addEventListener('change', dueDateVisibility);
+    
+    
+        //-----------------------------
+    
+        // Repatable
+        // Get references to the elements
+        const repeatableCheckbox = document.getElementById("repeatable");
+        const repeatabilitySelect = document.getElementById("repeatability");
+        const specificRepeatability = document.querySelector(".specific-repeatability");
+        const repeatabilityQuantity = document.querySelector(".repeatability-quantity");
+        const indefiniteCheckBox = document.getElementById("indefinite");
+    
+        indefiniteCheckBox.addEventListener("change", function () {
+            if (this.checked) {
+                repeatabilityQuantity.style.display = "none";
+            }
+        });
+    
+        // Add an event listener to the repeatable checkbox
+        repeatableCheckbox.addEventListener("change", function () {
+            if (this.checked) {
+                // If the checkbox is checked, show the repeatability-container
+                document.getElementById("repeatability-container").style.display = "block";
+            } else {
+                // If the checkbox is unchecked, hide the container and specific-repeatability
+                document.getElementById("repeatability-container").style.display = "none";
+                specificRepeatability.style.display = "none";
+            }
+        });
+    
+        // Add an event listener to the repeatability select
+        repeatabilitySelect.addEventListener("change", function () {
+            if (this.value === "7") {
+                // If "Specific" is selected, show the specific-repeatability
+                specificRepeatability.style.display = "block";
+            } else {
+                // If any other option is selected, hide the specific-repeatability
+                specificRepeatability.style.display = "none";
+            }
+        });
+    
+        // Add an event listener to the indefinite checkbox
+        indefiniteCheckBox.addEventListener("change", function () {
+            if (this.checked) {
+                // If the checkbox is checked, hide the repeatabilityQuantity input
+                repeatabilityQuantity.style.display = "none";
+            } else {
+                // If the checkbox is unchecked, show the repeatabilityQuantity input
+                repeatabilityQuantity.style.display = "block";
+            }
+        });
+    
+        // Initial updates based on the selected options
+        updateStatusOptions();
+        toggleDueDateVisibility();
+    </script>
+</body>
+
+</html>
