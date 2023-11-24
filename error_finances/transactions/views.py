@@ -23,7 +23,8 @@ def userData(request):
   
   context = {
        'current_user_id' : current_user_id,
-       'current_user_name' : current_user_name}
+       'current_user_name' : current_user_name
+       }
 
   return(context)
 
@@ -34,6 +35,7 @@ def userTransactions(request):
     
     all_transactions = Transactions.objects.all().values()
     user_transactions = Transactions.objects.filter(idUser=user_data['current_user_id'])
+    total_balance = calculate_total_balance(user_data['current_user_id'])
 
     template = loader.get_template('alltransactions.html')
     context = {
@@ -41,12 +43,14 @@ def userTransactions(request):
        'current_user_name' : user_data['current_user_name'],
        'user_transactions': user_transactions,
        'all_transactions': all_transactions,
+       'total_balance' : total_balance
     }
     return HttpResponse(template.render(context, request))
 
 # Exibe detalhes da transação de acordo com o id dela
 def detailsTransaction(request, id):
   user_data = userData(request)
+  total_balance = calculate_total_balance(user_data['current_user_id'])
   
   transaction = Transactions.objects.get(id = id)
   
@@ -54,7 +58,8 @@ def detailsTransaction(request, id):
   context = {
     'current_user_id' : user_data['current_user_id'],
     'current_user_name' : user_data['current_user_name'],
-    'transaction': transaction
+    'transaction': transaction,
+    'total_balance' : total_balance
   }
   return HttpResponse(template.render(context, request))
 
@@ -64,6 +69,7 @@ def createTransaction(request):
     current_date = today.strftime('%Y-%m-%d')
     user_data = userData(request)
     user_accounts = get_user_accounts(user_data['current_user_id'])
+    total_balance = calculate_total_balance(user_data['current_user_id'])
     
     if request.method == 'POST':
         transaction_name = request.POST['transactionName']
@@ -98,7 +104,7 @@ def createTransaction(request):
         
         
         color, category_name = category.split('/', 1)
-        category_id = get_or_create_category(user_data['current_user_id'], category, color)
+        category_id = get_or_create_category(user_data['current_user_id'], category_name, color)
 
         # Create transaction
         if ('expense' in request.POST):
@@ -139,6 +145,7 @@ def createTransaction(request):
                'current_user_id' : user_data['current_user_id'],
                'current_user_name' : user_data['current_user_name'],
                'user_accounts': user_accounts,
+               'total_balance' : total_balance
     }
     
     return HttpResponse(template.render(context,request))
@@ -173,7 +180,7 @@ def editTransaction(request, id):
   user_data = userData(request)
   transaction = Transactions.objects.get(id = id)
   user_accounts = get_user_accounts(user_data['current_user_id'])
-  print(transaction.idType)
+  total_balance = calculate_total_balance(user_data['current_user_id'])
   
   if request.method == 'POST':
     name = request.POST['transactionName']
@@ -185,7 +192,7 @@ def editTransaction(request, id):
     account = TransactionAccount.objects.get(id=account_id)
     
     color, category_name = category.split('/', 1)
-    category_id = get_or_create_category(user_data['current_user_id'], category, color)
+    category_id = get_or_create_category(user_data['current_user_id'], category_name, color)
         
     transaction.transactionName = name
     transaction.transactionDescription = description
@@ -201,7 +208,9 @@ def editTransaction(request, id):
   context = {'transaction' : transaction,
              'current_user_id' : user_data['current_user_id'],
              'current_user_name' : user_data['current_user_name'],
-             'user_accounts': user_accounts,}
+             'user_accounts': user_accounts,
+             'total_balance' : total_balance
+             }
   
   return HttpResponse(template.render(context,request))
 
@@ -210,6 +219,7 @@ def editTransaction(request, id):
 def deleteTransaction(request, id):
   user_data = userData(request)
   transaction = Transactions.objects.get(id = id)
+  total_balance = calculate_total_balance(user_data['current_user_id'])
   
   if request.method == 'POST':
     
@@ -220,7 +230,8 @@ def deleteTransaction(request, id):
   template = loader.get_template('delete.html')
   context = {'transaction' : transaction,
              'current_user_id' : user_data['current_user_id'],
-             'current_user_name' : user_data['current_user_name']}
+             'current_user_name' : user_data['current_user_name'],
+             'total_balance' : total_balance}
         
   return HttpResponse(template.render(context,request))
 
@@ -233,6 +244,7 @@ def get_user_accounts(user_id):
 @login_required
 def userAccounts(request):
     user_data = userData(request)
+    total_balance = calculate_total_balance(user_data['current_user_id'])
     
     user_accounts = get_user_accounts(user_data['current_user_id'])
 
@@ -241,6 +253,7 @@ def userAccounts(request):
        'current_user_id' : user_data['current_user_id'],
        'current_user_name' : user_data['current_user_name'],
        'user_accounts': user_accounts,
+       'total_balance' : total_balance
     }
     return HttpResponse(template.render(context, request))
 
@@ -252,6 +265,7 @@ def get_account_type(type):
 
 def createAccounts(request):
   user_data = userData(request)
+  total_balance = calculate_total_balance(user_data['current_user_id'])
   
   template = loader.get_template('createAccounts.html')
   
@@ -282,6 +296,7 @@ def createAccounts(request):
   context = {
      'current_user_id' : user_data['current_user_id'],
      'current_user_name' : user_data['current_user_name'],
+     'total_balance' : total_balance
   }
     
   return HttpResponse(template.render(context, request))
@@ -291,6 +306,7 @@ def createAccounts(request):
 def editAccounts(request, id):
   user_data = userData(request)
   account = TransactionAccount.objects.get(id = id)
+  total_balance = calculate_total_balance(user_data['current_user_id'])
   
   if request.method == 'POST':
     color = request.POST['account_color']
@@ -310,7 +326,8 @@ def editAccounts(request, id):
   template = loader.get_template('editAccounts.html')
   context = {'account' : account,
              'current_user_id' : user_data['current_user_id'],
-             'current_user_name' : user_data['current_user_name']
+             'current_user_name' : user_data['current_user_name'],
+             'total_balance' : total_balance
              }
   
   return HttpResponse(template.render(context,request))

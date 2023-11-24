@@ -56,7 +56,16 @@ body {
     align-items: center;
 }
 
-.input-bubble {
+#id_login{
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 15px;
+    width: 100%;
+}
+
+#id_password{
     display: flex;
     align-items: center;
     background-color: #fff;
