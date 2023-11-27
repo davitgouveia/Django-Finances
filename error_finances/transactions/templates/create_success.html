@@ -1,0 +1,48 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #1F2A3F;
+      color: #fff;
+      font-family: Arial, sans-serif;
+  }
+
+  .confirmation-container {
+      text-align: center;
+  }
+
+  .confirmation-message {
+      font-size: 24px;
+      margin-bottom: 20px;
+  }
+
+  .back-button {
+      background-color: #0059E0;
+      color: #fff;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+  }
+
+  .back-button:hover {
+      background-color: #45a049;
+  }
+</style>
+
+{% block content %}
+<body>
+  <div class="confirmation-container">
+      <div class="confirmation-message">
+          <p>Your transaction has been successfully submitted!</p>
+      </div>
+      <a href="/transactions" class="back-button">Go Back</a>
+  </div>
+</body>
+{% endblock %}

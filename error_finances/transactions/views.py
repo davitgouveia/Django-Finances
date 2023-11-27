@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.template import loader
 from django.db.models import Sum
@@ -32,20 +32,43 @@ def userData(request):
 @login_required
 def userTransactions(request):
     user_data = userData(request)
-    
-    all_transactions = Transactions.objects.all().values()
     user_transactions = Transactions.objects.filter(idUser=user_data['current_user_id'])
+    user_accounts = get_user_accounts(user_data['current_user_id'])
     total_balance = calculate_total_balance(user_data['current_user_id'])
-
-    template = loader.get_template('alltransactions.html')
+    
+    today = date.today()
+    current_date = today.strftime('%Y-%m-%d')
+    
+    if request.method == 'POST':
+      transaction_name_data = request.POST['transactionName']
+      transaction_description_data = request.POST['transactionDescription']
+      value_data = request.POST['value']
+      expense_data = True if ('expense' in request.POST) else False
+      status_data = get_status(request.POST['status'])
+      category_data = request.POST['category']
+      
+      account_id = request.POST['account']
+      account_data = TransactionAccount.objects.get(id=account_id)
+      
+      creation_date_data = request.POST['creationDate']
+      
+      if request.POST['status'] == "4" or request.POST['status'] == "6":
+          due_date_data = request.POST['dueDate']
+      else:
+          due_date_data = None
+      
+      createTransactionModal(user_data, transaction_name_data, transaction_description_data, value_data, expense_data, status_data, category_data, account_data, creation_date_data, due_date_data)
+      return redirect('/transactions/create_success')
+     
     context = {
        'current_user_id' : user_data['current_user_id'],
        'current_user_name' : user_data['current_user_name'],
        'user_transactions': user_transactions,
-       'all_transactions': all_transactions,
-       'total_balance' : total_balance
+       'user_accounts': user_accounts,
+       'current_date': current_date,
+       'total_balance' : total_balance,
     }
-    return HttpResponse(template.render(context, request))
+    return render(request, 'alltransactions.html', context)
 
 # Exibe detalhes da transação de acordo com o id dela
 def detailsTransaction(request, id):
@@ -63,92 +86,45 @@ def detailsTransaction(request, id):
   }
   return HttpResponse(template.render(context, request))
 
+def createTransactionModal(user_data, transactionName_data, transactionDescription_data, value_data, expense_data, status_data, category_data, account_id_data, creation_date_data, due_date_data):
+  repeatable_id = None
+  type = get_type(1) if (expense_data) else get_type(2)
+  color, category_name = category_data.split('/', 1)
+  category_id = get_or_create_category(user_data['current_user_id'], category_name, color)
+
+  # Create transaction
+  if (expense_data):
+    transaction = Expense(
+      idUser=user_data['current_user_id'],
+      transactionName=transactionName_data,
+      transactionDescription=transactionDescription_data,
+      value=value_data,
+      idType=type,
+      idStatus=status_data,
+      idCategory=category_id,
+      idTransactionAccount=account_id_data,
+      idRepeatable=repeatable_id,
+      creationDate=creation_date_data,
+      dueDate=due_date_data,)
+  else:
+    transaction = Income(
+    idUser=user_data['current_user_id'],
+    transactionName=transactionName_data,
+    transactionDescription=transactionDescription_data,
+    value=value_data,
+    idType=type,
+    idStatus=status_data,
+    idCategory=category_id,
+    idTransactionAccount=account_id_data,
+    idRepeatable=repeatable_id,
+    creationDate=creation_date_data,
+    dueDate=due_date_data,)
+        
+  transaction.save()
+
 # Create Transactions
-def createTransaction(request):
-    today = date.today()
-    current_date = today.strftime('%Y-%m-%d')
-    user_data = userData(request)
-    user_accounts = get_user_accounts(user_data['current_user_id'])
-    total_balance = calculate_total_balance(user_data['current_user_id'])
-    
-    if request.method == 'POST':
-        transaction_name = request.POST['transactionName']
-        transaction_description = request.POST['transactionDescription']
-        value = request.POST['value']
-        type = get_type(1) if ('expense' in request.POST) else get_type(2)
-        status = get_status(request.POST['status'])
-        category = request.POST['category']
-        
-        # Account
-        account_id = request.POST['account']
-        account = TransactionAccount.objects.get(id=account_id)
-        
-        creation_date = request.POST['creationDate']
-        
-        # Due Date
-        if request.POST['status'] == "4" or request.POST['status'] == "6":
-          due_date = request.POST['dueDate']
-        else:
-          due_date = None
-        
-        # Repeatable
-        if('repeatable' in request.POST):
-          repeatable_option = get_repeatability_option(request.POST['repeatability'])
-          print("repeatable_quantity: " + request.POST['repeatable_quantity'])
-          print("repeatable_date: " + request.POST['repeatability-date'])
-          repeatable_quantity = 0 if('indefinite' in request.POST) else request.POST['repeatable_quantity']
-          repeatable_date = 0 if request.POST['repeatability'] != "7" else request.POST['repeatability-date']
-          repeatable_id = create_repetability(repeatable_option,repeatable_quantity,repeatable_date)
-        else:
-          repeatable_id = None
-        
-        
-        color, category_name = category.split('/', 1)
-        category_id = get_or_create_category(user_data['current_user_id'], category_name, color)
-
-        # Create transaction
-        if ('expense' in request.POST):
-          transaction = Expense(
-              idUser=user_data['current_user_id'],
-              transactionName=transaction_name,
-              transactionDescription=transaction_description,
-              value=value,
-              idType=type,
-              idStatus=status,
-              idCategory=category_id,
-              idTransactionAccount=account,
-              idRepeatable=repeatable_id,
-              creationDate=creation_date,
-              dueDate=due_date,
-          )
-        else:
-          transaction = Income(
-              idUser=user_data['current_user_id'],
-              transactionName=transaction_name,
-              transactionDescription=transaction_description,
-              value=value,
-              idType=type,
-              idStatus=status,
-              idCategory=category_id,
-              idTransactionAccount=account,
-              idRepeatable=repeatable_id,
-              creationDate=creation_date,
-              dueDate=due_date,
-          )
-        
-        transaction.save()
-
-        return redirect('/transactions')  # Redirecione para a página desejada após a criação da transação
-
-    template = loader.get_template('create.html')
-    context = {'current_date' : current_date,
-               'current_user_id' : user_data['current_user_id'],
-               'current_user_name' : user_data['current_user_name'],
-               'user_accounts': user_accounts,
-               'total_balance' : total_balance
-    }
-    
-    return HttpResponse(template.render(context,request))
+def createSuccess(request):
+    return render(request, 'create_success.html')
 
 def get_repeatability_option(option):
   repeat_option_instance = cnfRepeatability.objects.get(id=option)

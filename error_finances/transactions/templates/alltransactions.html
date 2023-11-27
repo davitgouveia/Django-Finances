@@ -12,7 +12,10 @@
 </head>
 
 <body>
-  <h1 style="margin-bottom: 0px;"><t>All Transactions</t></h1>
+  <h1 style="margin-bottom: 0px;"><t>All Transactions</t></h1>  
+
+{% include 'create.html' %}
+<h3>{{context_view_create}}</h3>
     <div class="dashboard" style="padding-top: 0px;">
 <div class="left-container-allbills">
     <div class="bubbles">
@@ -32,13 +35,13 @@
                 <!-- Adicione opções de filtros aqui -->
             </select>
         </div>
-        <button class="add-button" onclick="location.href='/transactions/create'"><img src="{% static "/transactions/alltransactions/images/adicionar.svg" %}" alt="Add"></button>
+        <button class="add-button"  data-bs-toggle="modal" data-bs-target="#exampleModal"><img src="{% static "/transactions/alltransactions/images/adicionar.svg" %}" alt="Add"></button>
     </div>
   
     <div class="container" id="list-container">
       <!--Item-->
       {% for y in user_transactions %}
-      <td><a href="details/{{y.id}}"><div class="row" id="list-item">
+      <a href="details/{{y.id}}"><div class="row" id="list-item">
           <div class="col-auto" style="display: flex; align-items: center; justify-content: center;">
               <i class="material-icons" style="color: #{{ y.idCategory.categoryColor }};" id="icon">radio_button_checked</i>
           </div>

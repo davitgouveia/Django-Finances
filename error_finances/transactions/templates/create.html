@@ -1,92 +1,78 @@
-{% extends 'master_transactions.html' %}
+<head>
+  {% load static %}
+  <link rel="stylesheet" href="{% static "/transactions/create/styles.css" %}">
+</head>
 
-{% block title %}
-  Save Savvy - Criar Transação
-{% endblock %}
-
-{% block content %}
-<h1>Criar Transação</h1>
-<form method="post">
-    {% csrf_token %}
-    
-    <label for="transactionName">Nome da Transação:</label>
-    <input type="text" name="transactionName" id="transactionName" required><br>
-    <label for="transactionDescription">Descrição:</label>
-    <input type="text" name="transactionDescription" id="transactionDescription" required><br>
-
-    <label for="value">Valor:</label>
-    <input type="number" step="0.01" name="value" id="value" required><br>
-
-    <label for="expense">Despesa:</label>
-    <input type="checkbox" name="expense" id="expense" checked><br>
-
-    <label for="status">Status:</label>
-      <select name="status" id="status">
-      <option value="3">Paid</option>
-      <option value="4">Not Paid</option>
-      <option value="5">Received</option>
-      <option value="6">Receivable</option>
-      </select><br>
-
-    <label for="category">Categoria:</label>
-      <select name="category" id="category">
-      <option value="0077b6/Home">Home</option>
-      <option value="228B22/Education">Education</option>
-      <option value="fc7905/Leisure">Leisure</option>
-      <option value="fc0505/Restaurant">Restaurant</option>
-      <option value="009402/Health">Health</option>
-      <option value="c91e00/Groceries">Groceries</option>
-      <option value="003cc9/Transport">Transport</option>
-      <option value="02b1d4/Clothing">Clothing</option>
-      </select><br>
-
-    <label for="account">Conta:</label>
-    <select name="account" id="account" required>
-        {% for account in user_accounts %}
-            <option value="{{ account.id }}">{{ account.accountName }}</option>
-        {% endfor %}
-    </select><br>
-
-    <label for="creationDate">Data de Criação:</label>
-    <input type="date" name="creationDate" id="creationDate" value="{{current_date}}"><br>
-
-    <div id="dueDate-container" style="display: none;">
-        <label for="dueDate">Data de Vencimento:</label>
-        <input type="date" name="dueDate" id="dueDate" value="{{current_date}}"><br>
+<!-- Modal -->
+<div class="modal fade " id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content bg-transparent">
+      <div class="modal-body" style="padding: 0;">
+        <form method="post">
+          {% csrf_token %}
+          <div class="title-modal">
+            <h1>Create Transaction</h1>
+          </div>
+          <div class="bubble-modal">
+          <label for="transactionName">Transaction Name:</label>
+          <input type="text" name="transactionName" id="transactionName" required><br>
+          <label for="transactionDescription">Description:</label>
+          <input type="text" name="transactionDescription" id="transactionDescription" required><br>
+      
+          <label for="value">Value:</label>
+          <input type="number" step="0.01" name="value" id="value" required><br>
+      
+          <label for="expense">Expense:</label>
+          <input type="checkbox" name="expense" id="expense" checked="" style="
+          width: 20px;
+          height: 20px;
+          padding-bottom: 0px;
+          margin-bottom: 16px;">
+      
+          <label for="status">Status:</label>
+          <select name="status" id="status">
+              <option value="3">Paid</option>
+              <option value="4">Not Paid</option>
+              <option value="5">Received</option>
+              <option value="6">Receivable</option>
+          </select><br>
+      
+          <label for="category">Category:</label>
+          <select name="category" id="category">
+              <option value="0077b6/Home">Home</option>
+              <option value="228B22/Education">Education</option> 
+              <option value="fc7905/Leisure">Leisure</option>
+              <option value="fc0505/Restaurant">Restaurant</option>
+              <option value="009402/Health">Health</option>
+              <option value="c91e00/Groceries">Groceries</option>
+              <option value="003cc9/Transport">Transport</option>
+              <option value="02b1d4/Clothing">Clothing</option>
+          </select><br>
+      
+          <label for="account">Account:</label>
+          <select name="account" id="account" required>
+              {% for account in user_accounts %}
+              <option value="{{ account.id }}">{{ account.accountName }}</option>
+              {% endfor %}
+          </select><br>
+      
+          <label for="creationDate">Creation Date:</label>
+          <input type="date" name="creationDate" id="creationDate" value="{{current_date}}"><br>
+      
+          <div id="dueDate-container" style="display: none;">
+              <label for="dueDate">Due Date:</label>
+              <input type="date" name="dueDate" id="dueDate" value="{{current_date}}"><br>
+          </div>
+      
+          <div class="button-modal">
+          <input type="submit" value="Save">
+          </div>
+          </div>
+        </form>
+      </div>
     </div>
-
-    <hr>
-    
-    <label for="repeatable">Repeatable:</label>
-    <input type="checkbox" name="repeatable" id="repeatable"><br>
-
-    <div id="repeatability-container" style="display: none;">
-      <label for="repeatability">Repeatability:</label>
-      <select name="repeatability" id="repeatability">
-          <option value="2">Daily</option>
-          <option value="3">Weekly</option>
-          <option value="4">Monthly</option>
-          <option value="5">Annualy</option>
-          <option value="7">Specific</option>
-      </select><br>
-
-      <label for="indefinite">Indefinite:</label>
-      <input type="checkbox" name="indefinite" id="indefinite"><br>
-      
-      <div class="repeatability-quantity" style="display:block">
-        <label for="repeatable_quantity">Repeatable Quantity:</label>
-        <input type="number" name="repeatable_quantity" id="repeatable_quantity" value=1><br>
-      </div>
-      
-      <div class="specific-repeatability" style="display: none;">
-        <label for="repeatability-date">Specific Date:</label>
-        <input type="number" name="repeatability-date" id="repeatability-date"><br>
-      </div>
   </div>
-
-    <input type="submit" value="Salvar">
-</form>
-<p>Voltar para as <a href="/transactions/">transações</a></p>
+</div>
 
 <script>
   // Status checkbox treatment
@@ -199,4 +185,6 @@
   toggleDueDateVisibility();
 </script>
 
-{% endblock %}
+
+
+
