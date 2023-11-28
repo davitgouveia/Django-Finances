@@ -55,6 +55,14 @@ t{
     flex-direction: row-reverse;
 }
 
+.search-button {
+    background-color: #1F2A3F;
+    border: none;
+    width: 3em;
+    border-radius: 17.486px;
+    
+}
+
 .bubble d {
     font-weight: 785;
     height: 80px;
@@ -227,6 +235,12 @@ t{
     padding: 0;
 }
 
+.creationDate {
+    font-size: xx-small;
+    padding: 0;
+    transform: translateY(1em); 
+}
+
 
 
 @media (max-width: 768px) {
@@ -245,6 +259,10 @@ t{
         padding-top: 17px;
     }
 
+    .search-button {
+        margin-top: 20px;
+    }
+    
     .add-button {
         width: 30%;
         margin-top: 20px;
