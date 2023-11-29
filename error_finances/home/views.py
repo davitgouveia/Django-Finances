@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template import loader
@@ -17,12 +17,7 @@ def userData(request):
     return context
 
 def main(request):
-    context = {}  # Initialize an empty context dictionary
-
-    if request.user.is_authenticated:
-        context['username'] = request.user.username
-
-    return render(request, 'main.html', context)
+    return redirect("/transactions")
 
 @login_required
 def settings(request):

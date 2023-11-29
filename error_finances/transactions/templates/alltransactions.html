@@ -38,13 +38,15 @@
         <button class="add-button"  data-bs-toggle="modal" data-bs-target="#exampleModal"><img src="{% static "/transactions/alltransactions/images/adicionar.svg" %}" alt="Add"></button>
     </div>
   
+    
     <div class="container" id="list-container">
       <!--Item-->
       {% for y in user_transactions %}
       <div class="row">
         <div class="creationDate">{{ y.creationDate }}</div>
     </div>
-      <a href="details/{{y.id}}"><div class="row" id="list-item">
+      <a href="/transactions/details/{{ y.id }}">
+        <div class="row" id="list-item">
           <div class="col-auto" style="display: flex; align-items: center; justify-content: center;">
               <i class="material-icons" style="color: #{{ y.idCategory.categoryColor }};" id="icon">radio_button_checked</i>
           </div>
@@ -58,9 +60,11 @@
           </div>
           <div class="col-auto" id="value-col">
               <div class="row">
-                  <div class="value" {% if y.idType.type == "Expense" %}
+                  <div class="value" {% if y.idType.type == "Expense"%}
                   style="color: #f74c4c;"
-                  {% elif y.idType.type == "Income" %}
+                  {% elif y.idType.type == "Income" and y.idStatus.status == "Receivable"%}
+                  style="color: #1ec92f88;"
+                  {%else%}
                   style="color: #1ec92f;"
                   {% endif %}>R$ {{ y.value }}</div>
               </div>
@@ -72,7 +76,8 @@
               </div>
           </div>
       </div>
-          {% endfor %}
+      {% endfor %}
+    </a>
       </div>
 
 </div>

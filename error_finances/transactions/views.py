@@ -41,48 +41,49 @@ def userTransactions(request):
     current_date = today.strftime("%Y-%m-%d")
     current_month = today.strftime("%m")
     current_year = today.strftime("%Y")
-    
+
     # Main
     user_transactions = Transactions.objects.filter(
         idUser=user_data["current_user_id"],
         creationDate__month=current_month,
         creationDate__year=current_year,
-    ).order_by('-creationDate')
-    
+    ).order_by("-creationDate")
+
     # Filters
-    
-    # Create Transaction
+
     if request.method == "POST":
-        transaction_name_data = request.POST["transactionName"]
-        transaction_description_data = request.POST["transactionDescription"]
-        value_data = request.POST["value"]
-        expense_data = True if ("expense" in request.POST) else False
-        status_data = get_status(request.POST["status"])
-        category_data = request.POST["category"]
+        # Create Transaction
+        if 'createTransaction' in request.POST:
+            transaction_name_data = request.POST["transactionName"]
+            transaction_description_data = request.POST["transactionDescription"]
+            value_data = request.POST["value"]
+            expense_data = True if ("expense" in request.POST) else False
+            status_data = get_status(request.POST["status"])
+            category_data = request.POST["category"]
 
-        account_id = request.POST["account"]
-        account_data = TransactionAccount.objects.get(id=account_id)
+            account_id = request.POST["account"]
+            account_data = TransactionAccount.objects.get(id=account_id)
 
-        creation_date_data = request.POST["creationDate"]
+            creation_date_data = request.POST["creationDate"]
 
-        if request.POST["status"] == "4" or request.POST["status"] == "6":
-            due_date_data = request.POST["dueDate"]
-        else:
-            due_date_data = None
+            if request.POST["status"] == "4" or request.POST["status"] == "6":
+                due_date_data = request.POST["dueDate"]
+            else:
+                due_date_data = None
 
-        createTransactionModal(
-            user_data,
-            transaction_name_data,
-            transaction_description_data,
-            value_data,
-            expense_data,
-            status_data,
-            category_data,
-            account_data,
-            creation_date_data,
-            due_date_data,
-        )
-        return redirect("/transactions/create_success")
+            createTransactionModal(
+                user_data,
+                transaction_name_data,
+                transaction_description_data,
+                value_data,
+                expense_data,
+                status_data,
+                category_data,
+                account_data,
+                creation_date_data,
+                due_date_data,
+            )
+            return redirect("/transactions/create_success")
 
     context = {
         "current_user_id": user_data["current_user_id"],
@@ -100,7 +101,12 @@ def detailsTransaction(request, id):
     user_data = userData(request)
     total_balance = calculate_total_balance(user_data["current_user_id"])
 
-    transaction = Transactions.objects.get(id=id)
+    transaction_fetch = Transactions.objects.get(id=id)  
+    
+    if transaction_fetch.idType.id == 1:
+        transaction = Expense.objects.get(id=id) 
+    else: 
+        transaction = Income.objects.get(id=id) 
 
     template = loader.get_template("details.html")
     context = {
@@ -207,8 +213,6 @@ def create_repetability(repeatable_option, repeatable_quantity, repeatable_date)
 
 
 # Edit Transactions
-
-
 def editTransaction(request, id):
     user_data = userData(request)
     transaction = Transactions.objects.get(id=id)
