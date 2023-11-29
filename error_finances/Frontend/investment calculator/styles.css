@@ -71,4 +71,8 @@ tbody, td, tfoot, th, thead, tr {
         display: flex;
         flex-direction: column;
     }
+
+    tbody, td, tfoot, th, thead, tr {
+        font-size: 14px;
+    }
 }
