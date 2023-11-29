@@ -5,56 +5,70 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Editar {{transaction.idType}}</h1>
+<div class="container" style="margin-top: 4.2em;">
+  <div class="card rounded p-4" style="background-color: #1F2A3F; color: white;position: unset;">
+    <h1 class="font-weight-bold">Edit: {{ transaction.transactionName }}</h1>
     <form method="post">
-        {% csrf_token %}
+      {% csrf_token %}
+      <div class="form-group">
         <label for="transactionName">Nome da Transação:</label>
-        <input type="text" name="transactionName" id="transactionName" value="{{transaction.transactionName}}" required><br>
+        <input type="text" class="form-control" name="transactionName" id="transactionName" value="{{ transaction.transactionName }}" required>
+      </div>
 
+      <div class="form-group">
         <label for="transactionDescription">Descrição:</label>
-        <input type="text" name="transactionDescription" id="transactionDescription" value ="{{transaction.transactionDescription}}" required><br>
+        <input type="text" class="form-control" name="transactionDescription" id="transactionDescription" value="{{ transaction.transactionDescription }}" required>
+      </div>
 
-
+      <div class="form-group">
         <label for="value">Valor:</label>
-        <input type="number" step="0.01" name="value" id="value" value="{{transaction.value}}" required><br>
-    
-        <label for="category">Categoria:</label>
-          <select name="category" id="category" required>
-            <option value="0077b6/Home">Home</option>
-            <option value="228B22/Education">Education</option>
-            <option value="fc7905/Leisure">Leisure</option>
-            <option value="fc0505/Restaurant">Restaurant</option>
-            <option value="009402/Health">Health</option>
-            <option value="c91e00/Groceries">Groceries</option>
-            <option value="003cc9/Transport">Transport</option>
-            <option value="02b1d4/Clothing">Clothing</option>
-        </select><br>
+        <input type="number" step="0.01" class="form-control" name="value" id="value" value="{{ transaction.value }}" required>
+      </div>
 
+      <div class="form-group">
+        <label for="category">Categoria:</label>
+        <select class="form-control" name="category" id="category" required>
+          <option value="0077b6/Home">Home</option>
+          <option value="228B22/Education">Education</option>
+          <option value="fc7905/Leisure">Leisure</option>
+          <option value="fc0505/Restaurant">Restaurant</option>
+          <option value="009402/Health">Health</option>
+          <option value="c91e00/Groceries">Groceries</option>
+          <option value="003cc9/Transport">Transport</option>
+          <option value="02b1d4/Clothing">Clothing</option>
+        </select>
+      </div>
+
+      <div class="form-group">
         <label for="status">Status:</label>
-          <select name="status" id="status" value="{{transaction.idStatus.status}}" required>
-            {% if transaction.idType.type == "Expense" %}
+        <select class="form-control" name="status" id="status" required>
+          {% if transaction.idType.type == "Expense" %}
             <option value="3">Paid</option>
             <option value="4">Not Paid</option>
           {% elif transaction.idType.type == "Income" %}
             <option value="5">Received</option>
             <option value="6">Receivable</option>
           {% endif %}
-      </select><br>
-      
-      <label for="account">Conta:</label>
-      <select name="account" id="account" value = {{transaction.idTransactionAccount}} required>
-        {% for account in user_accounts %}
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="account">Conta:</label>
+        <select class="form-control" name="account" id="account" required>
+          {% for account in user_accounts %}
             <option value="{{ account.id }}">{{ account.accountName }}</option>
-        {% endfor %}
-      </select><br>
+          {% endfor %}
+        </select>
+      </div>
 
-        <input type="submit" value="Salvar">
+      <button class="btn btn-primary mt-3" type="submit" class="btn btn-primary">Save</button>
     </form>
-  <p>
-    Voltar para a <a href="/transactions/details/{{transaction.id}}">transação</a>
-  </p>
 
-  <script>
-
-  </script>
+    <div class="row mt-3">
+      <div class="col-md-6">
+        <button class="btn btn-info btn-block btn-sm" onclick="location.href='/transactions/details/{{transaction.id}}'" type="button">Voltar para Transações</button>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

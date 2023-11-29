@@ -1,0 +1,100 @@
+
+
+.modal-body form {
+    margin-top: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title-modal h1 {
+    font-weight: 700;
+    margin-left: 5px;
+}
+
+
+.modal-body option {
+    color: white;
+    background-color: #1F2A3F;
+}
+
+.modal-body select {
+    padding: 10px;
+    padding-left: 20px;
+    border-radius: 10px;
+    border-style: none;
+    color: white;
+    font-size: 16px;
+    background-color: #33496b;
+    margin-top: 7px;
+}
+
+.modal-body input{
+    padding: 10px;
+    padding-left: 20px;
+    border-radius: 10px;
+    border-style: none;
+    color: white;
+    font-size: 16px;
+    background-color: #33496b;
+    margin-top: 7px;
+    width: -webkit-fill-available;
+}
+
+
+
+
+.title-modal {
+    background-color: #0059E0;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px 20px 5px 20px;
+    border-radius: 20px 20px 0px 0px;
+}
+
+.bubble-modal {
+    background-color: #1F2A3F;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 0px 0px 20px 20px;
+}
+
+.button-modal input{
+    margin-top: 20px;
+    background-color: #0059E0;
+}
+
+
+/* Estilizando o ícone do calendário */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);/* Altere para a cor desejada */
+}
+
+
+/* @media queries para ajustar o tamanho das bolhas em telas menores */
+@media screen and (max-width: 860px) {
+   
+    .bubble-modal {
+        width: -webkit-fill-available;
+        border-radius: 0px;
+    }
+
+    .title-modal {
+        width: -webkit-fill-available;
+        border-radius: 0px;
+    }
+
+    form {
+        margin-top: auto;
+    }
+
+}
+
+
+
+
+

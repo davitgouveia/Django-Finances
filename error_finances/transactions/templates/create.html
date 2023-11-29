@@ -7,9 +7,10 @@
 <div class="modal fade " id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content bg-transparent">
-      <div class="modal-body" style="padding: 0;">
+      <div class="modal-body" style="padding: 0;" >
         <form method="post">
           {% csrf_token %}
+          <input type="hidden" name="form_id" value="createTransaction">
           <div class="title-modal">
             <h1>Create Transaction</h1>
           </div>
@@ -65,7 +66,7 @@
           </div>
       
           <div class="button-modal">
-          <input type="submit" value="Save">
+          <input type="submit" value="Save" name="createTransaction">
           </div>
           </div>
         </form>
