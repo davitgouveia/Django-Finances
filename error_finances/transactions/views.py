@@ -1,8 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
 from django.template import loader
-from django.db.models import Sum
+from django.db.models import Sum, Count
 from datetime import date, datetime, timedelta
 import calendar
 
@@ -389,13 +389,13 @@ def editAccounts(request, id):
 
 def calculate_total_balance(user_id):
     income_sum = (
-        Income.objects.filter(transactions_ptr_id__idUser=user_id).aggregate(
+        Income.objects.filter(transactions_ptr_id__idUser=user_id, transactions_ptr_id__idStatus__status='Received').aggregate(
             Sum("value")
         )["value__sum"]
         or 0
     )
     expense_sum = (
-        Expense.objects.filter(transactions_ptr_id__idUser=user_id).aggregate(
+        Expense.objects.filter(transactions_ptr_id__idUser=user_id, transactions_ptr_id__idStatus__status='Paid').aggregate(
             Sum("value")
         )["value__sum"]
         or 0
@@ -419,7 +419,7 @@ def calculate_monthly_balance(user_id):
                 first_day_of_month,
                 last_day_of_month,
             ),
-            transactions_ptr_id__idUser=user_id,
+            transactions_ptr_id__idUser=user_id, transactions_ptr_id__idStatus__status='Received'
         ).aggregate(Sum("value"))["value__sum"]
         or 0
     )
@@ -429,7 +429,7 @@ def calculate_monthly_balance(user_id):
                 first_day_of_month,
                 last_day_of_month,
             ),
-            transactions_ptr_id__idUser=user_id,
+            transactions_ptr_id__idUser=user_id, transactions_ptr_id__idStatus__status='Paid'
         ).aggregate(Sum("value"))["value__sum"]
         or 0
     )
@@ -442,6 +442,70 @@ def calculate_monthly_balance(user_id):
     }
 
     return context
+
+
+def category_pie_chart(request):
+    user_data = userData(request)
+    labels = []
+    data = []
+    color = []
+    
+    queryset = Expense.objects.values('idCategory__categoryName', 'idCategory__categoryColor').filter(transactions_ptr_id__idUser=user_data["current_user_id"]).annotate(transactions=Count('id'))
+    
+    for entry in queryset:
+        labels.append(entry['idCategory__categoryName'])
+        color.append('#' + entry['idCategory__categoryColor'])
+        data.append(entry['transactions'])
+        
+    return JsonResponse(data={
+        'labels' : labels,
+        'color' : color,
+        'data' : data,
+    })
+    
+def expense_doughnut_chart(request):
+    user_data = userData(request)
+    labels = []
+    data = []
+    color = []
+    
+    queryset = Expense.objects.values('idStatus__status').filter(transactions_ptr_id__idUser=user_data["current_user_id"]).annotate(transactions=Count('id'))
+    
+    for entry in queryset:
+        labels.append(entry['idStatus__status'])
+        if(entry['idStatus__status'] == 'Paid'):
+            color.append('#1ec92f')
+        else:
+            color.append('#f74c4c')
+        data.append(entry['transactions'])
+        
+    return JsonResponse(data={
+        'labels' : labels,
+        'color' : color,
+        'data' : data,
+    })
+    
+def expenseIncome_line_chart(request):
+    user_data = userData(request)
+    labels = []
+    data = []
+    color = []
+    
+    queryset = Expense.objects.values('idStatus__status').filter(transactions_ptr_id__idUser=user_data["current_user_id"]).annotate(transactions=Count('id'))
+    
+    for entry in queryset:
+        labels.append(entry['idStatus__status'])
+        if(entry['idStatus__status'] == 'Paid'):
+            color.append('#1ec92f')
+        else:
+            color.append('#f74c4c')
+        data.append(entry['transactions'])
+        
+    return JsonResponse(data={
+        'labels' : labels,
+        'color' : color,
+        'data' : data,
+    })
 
 
 @login_required

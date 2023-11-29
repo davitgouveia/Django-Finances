@@ -12,5 +12,9 @@ urlpatterns = [
     path('accounts/create', views.createAccounts, name='createAccounts'),
     path('accounts/editaccounts/<int:id>', views.editAccounts, name='editAccounts'),
     
+    #Charts JSON#
+    path('category-pie-chart', views.category_pie_chart, name='category-pie-chart'),
+    path('expense-doughnut-chart', views.expense_doughnut_chart, name='expense-doughnut-chart'),
+    
     path('testing/', views.testing, name='testing'),   
 ]

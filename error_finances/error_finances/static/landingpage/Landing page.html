@@ -1,12 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Savve Savvy</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'landingpage/styles.css' %}">
+    <title>Welcome</title>
+    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="shortcut icon" type="image/png" href="{% static 'master-menu/favicon.png' %}" >
     
     
 </head>
@@ -15,23 +15,24 @@
       
         <div class="right-container">
             <div class="alignment">
-            <img src="{% static 'landingpage/logo.svg' %}" alt="Logo">
+            <img src="logo.svg" alt="Logo">
             <h3>Start saving, savvily</h3>
             </div>
             <div class="buttons">
-                <button class="Create-Account" onclick="location.href='http://127.0.0.1:8000/accounts/signup/?next=%2Ftransactions%2F';">
+                <button class="Create-Account">
                     Create Account
                 </button>
                 <h3>or</h3>
-                <button class="Sign-in" onclick="location.href='http://127.0.0.1:8000/accounts/login/';">
+                <button class="Sign-in">
                     Sign in
                 </button>
             </div>
         </div>
 
         <div class="left-container">
-            <img src="{% static 'landingpage/banner.svg' %}" alt="Banner">
+            <img src="banner.svg" alt="Banner">
         </div>
     </div>
 
 </body>
+</html>

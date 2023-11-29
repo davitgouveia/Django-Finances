@@ -17,7 +17,7 @@ def userData(request):
     return context
 
 def main(request):
-    return redirect("/transactions")
+    return render(request, 'main.html')
 
 @login_required
 def settings(request):

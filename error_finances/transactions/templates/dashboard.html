@@ -35,9 +35,18 @@
           </div>
         </div>
         <h2>Graphs</h2>
-        <div class="graphs-container">
+        <div class="graphs-container" style="display: flex;">
           <!-- Graficos -->
-          <img src="https://www.jaspersoft.com/sites/jaspersoft/files/2023-09/pie-chart-example.svg">
+          <div id="graph" style="width: 50%;">
+            <p style="padding: 1em; margin: 0; font-weight: 600;">Expenses by Category</p>
+            <canvas id="category-pie-chart" data-url="{% url 'category-pie-chart' %}"></canvas>
+          </div>
+          <div id="graph" style="width: 50%;">
+            <p style="padding: 1em; margin: 0; font-weight: 600;">Expenses Status</p>
+            <canvas id="expense-doughnut-chart" data-url="{% url 'expense-doughnut-chart' %}"></canvas>
+          </div>
+
+
         </div>
       </div>
       <div class="right-container-db">
@@ -49,5 +58,102 @@
         <button class="add-button"><img src="{% static '/dashboard/adicionar.svg' %}" alt="Add" /></button>
       </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <script>
+      // Category Pie Chart
+      $(function () {
+  
+        var $populationChart = $("#category-pie-chart");
+        $.ajax({
+          url: $populationChart.data("url"),
+          success: function (data) {
+  
+            var ctx = $populationChart[0].getContext("2d");
+  
+            new Chart(ctx, {
+              type: 'pie',
+              data: {
+                labels: data.labels,
+                datasets: [{
+                  label: 'Category',
+                  backgroundColor: data.color,
+                  data: data.data
+                }]          
+              },
+              options: {
+                responsive: true,
+                legend: {
+                  position: 'bottom',
+                },
+                tooltips: {
+                  callbacks: {
+                    label: function (tooltipItem, data) {
+                      var dataset = data.datasets[tooltipItem.datasetIndex];
+                      var total = dataset.data.reduce(function (previousValue, currentValue, currentIndex, array) {
+                        return previousValue + currentValue;
+                      });
+                      var currentValue = dataset.data[tooltipItem.index];
+                      var percentage = Math.floor(((currentValue / total) * 100) + 0.5);
+                      return percentage + "%";
+                    }
+                  }
+                }
+              }
+            });
+          }
+        });
+      });
+  
+    </script>
+
+    <script>
+      // Category Pie Chart
+      $(function () {
+  
+        var $expenseChart = $("#expense-doughnut-chart");
+        $.ajax({
+          url: $expenseChart.data("url"),
+          success: function (data) {
+  
+            var ctx = $expenseChart[0].getContext("2d");
+  
+            new Chart(ctx, {
+              type: 'doughnut',
+              data: {
+                labels: data.labels,
+                datasets: [{
+                  label: 'Category',
+                  backgroundColor: data.color,
+                  data: data.data
+                }]          
+              },
+              options: {
+                responsive: true,
+                legend: {
+                  position: 'bottom',
+                },
+                tooltips: {
+                  callbacks: {
+                    label: function (tooltipItem, data) {
+                      var dataset = data.datasets[tooltipItem.datasetIndex];
+                      var total = dataset.data.reduce(function (previousValue, currentValue, currentIndex, array) {
+                        return previousValue + currentValue;
+                      });
+                      var currentValue = dataset.data[tooltipItem.index];
+                      var percentage = Math.floor(((currentValue / total) * 100) + 0.5);
+                      return percentage + "%";
+                    }
+                  }
+                }
+              }
+            });
+          }
+        });
+      });
+  
+    </script>
   </body>
 {% endblock %}
