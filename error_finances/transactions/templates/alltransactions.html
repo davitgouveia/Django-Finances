@@ -12,33 +12,39 @@
 </head>
 
 <body>
-  <h1 style="margin-bottom: 0px;"><t>All Transactions</t></h1>
+  <h1 style="margin-bottom: 0px;"><t>All Transactions</t></h1>  
+
+{% include 'create.html' %}
+<h3>{{context_view_create}}</h3>
     <div class="dashboard" style="padding-top: 0px;">
 <div class="left-container-allbills">
     <div class="bubbles">
         <div class="bubblesh">
-          <img src="{% static "/transactions/alltransactions/images/icone_pesquisa.png" %}" alt="Pesquisar">
             <input type="text" placeholder="Enter with the bill name...">
         </div>
         <div class="bubble">
-          <img src="{% static "/transactions/alltransactions/images/icone_calendario.png" %}" alt="Calendário">
+          {% comment %} <img src="{% static "/transactions/alltransactions/images/icone_calendario.png" %}" alt="Calendário"> {% endcomment %}
                 <input type="month" value="">
                 <!-- Adicione opções de datas aqui -->
         </div>
         <div class="bubble">
-          <img src="{% static "/transactions/alltransactions/images/icone_filtro.png" %}" alt="Filtro">
+          {% comment %} <img src="{% static "/transactions/alltransactions/images/icone_filtro.png" %}" alt="Filtro"> {% endcomment %}
             <select>
                 <option value="" disabled selected>Filters</option>
                 <!-- Adicione opções de filtros aqui -->
             </select>
         </div>
-        <button class="add-button" onclick="location.href='/transactions/create'"><img src="{% static "/transactions/alltransactions/images/adicionar.svg" %}" alt="Add"></button>
+        <button class="search-button"><img src="{% static "/transactions/alltransactions/images/icone_pesquisa.png" %}" alt="Pesquisar"></button>
+        <button class="add-button"  data-bs-toggle="modal" data-bs-target="#exampleModal"><img src="{% static "/transactions/alltransactions/images/adicionar.svg" %}" alt="Add"></button>
     </div>
   
     <div class="container" id="list-container">
       <!--Item-->
       {% for y in user_transactions %}
-      <td><a href="details/{{y.id}}"><div class="row" id="list-item">
+      <div class="row">
+        <div class="creationDate">{{ y.creationDate }}</div>
+    </div>
+      <a href="details/{{y.id}}"><div class="row" id="list-item">
           <div class="col-auto" style="display: flex; align-items: center; justify-content: center;">
               <i class="material-icons" style="color: #{{ y.idCategory.categoryColor }};" id="icon">radio_button_checked</i>
           </div>
@@ -62,7 +68,7 @@
                   <div class="status">{{ y.idStatus }}</div>
               </div>
               <div class="row">
-                  <div class="dueDate">{{ y.Expense.dueDate }}</div>
+                  <div class="dueDate">{{ y.dueDate }}</div>
               </div>
           </div>
       </div>

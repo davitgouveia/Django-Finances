@@ -47,12 +47,19 @@ t{
     line-height: 39.612px;
     letter-spacing: -0.262px;
     font-size: 15px;
-    position: relative;
     padding: 7px;
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
     flex-direction: row-reverse;
+}
+
+.search-button {
+    background-color: #1F2A3F;
+    border: none;
+    width: 3em;
+    border-radius: 17.486px;
+    
 }
 
 .bubble d {
@@ -93,7 +100,6 @@ t{
     line-height: 39.612px;
     letter-spacing: -0.262px;
     font-size: 15px;
-    position: relative;
     padding: 7px;
     display: flex;
     justify-content: flex-end;
@@ -169,15 +175,16 @@ t{
     background-color: #111827;
     color:#FFF;
     margin-left: 0;
+    margin-top: 1em;
     
 }
 
 #list-item {
     background-color: #1F2A3F;
-    margin-top: 0.5em;
     border-radius: 15px;
     color:#FFF;
     height: 4.5em;
+    margin-bottom: 0.75em;
 }
 
 .col {
@@ -227,6 +234,12 @@ t{
     padding: 0;
 }
 
+.creationDate {
+    font-size: xx-small;
+    padding: 0;
+    margin-bottom: 0;
+}
+
 
 
 @media (max-width: 768px) {
@@ -245,6 +258,10 @@ t{
         padding-top: 17px;
     }
 
+    .search-button {
+        margin-top: 20px;
+    }
+    
     .add-button {
         width: 30%;
         margin-top: 20px;

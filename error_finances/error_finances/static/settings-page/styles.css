@@ -1,0 +1,188 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #111827;
+    font-family: 'Jockey One', sans-serif;
+    color: var(--Texto, #FFF);
+}
+
+#settings-page h1, h2 {
+    font-weight: 700;
+}
+
+#settings-page h4 {
+    font-weight: 600;
+    margin-top: 40px;
+}
+
+
+
+a{
+    color: #999;
+}
+
+.Container-st {
+    display: flex;
+    justify-content: space-between;
+    background-color: #111827;
+    padding: 20px;
+    margin-top: -10px;
+}
+
+.left-container-st,
+.right-container-st {
+    background-color: #111827;
+    padding: 20px;
+    border-radius: 17.486px;
+    margin-top: 20px;
+}
+
+.left-container-st{
+    width: 60%; 
+}
+
+.input-group {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+/*-----------------------------------*/
+
+.input-bubble {
+    display: flex;
+    align-items: center;
+    background-color: #1F2A3F;
+    border-radius: 15px;
+    padding: 15px;
+    width: 90%;
+}
+
+.text-bubble {
+    display: flex;
+    align-items: center;
+    background-color: #1F2A3F;
+    border-radius: 15px;
+    padding: 15px;
+    width: fit-content;
+}
+
+.delete-bubble {
+    display: flex;
+    align-items: center;
+    border-color: #B10707;
+    color:#D20909;
+    border-radius: 15px;
+    padding: 15px;
+    width: fit-content;
+    border: 1px solid;
+}
+
+.delete-bubble a {
+    color:#B10707;
+}
+
+
+
+.black-icon {
+    color: #00F5FF;
+}
+
+.input-icon {
+    margin-right: 10px;
+}
+
+.input-icon i {
+    font-size: 18px;
+}
+
+input{
+    background-color: transparent;
+    width: 100%;
+    border: none;
+    color: white;
+}
+
+/*---------------------------------------*/
+.right-container-st {
+    width: 35%;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    align-items: center;
+}
+
+.user-avatar-settings {
+    width: 125px;
+    height: 125px;
+    border-radius: 45%;
+    overflow: hidden;
+    margin-left: 10px;
+}
+
+.user-avatar-settings img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin: 0px;
+    margin-left: 0px;
+}
+
+.right-container-st Cbutton, 
+.right-container-st Rbutton{
+    color: #FFF;
+}
+
+Cbutton {
+    right: 38px;
+    bottom: 20px;
+    width: 140px;
+    height: 50px;
+    background-color: #0059E0;
+    color: #111827;
+    font-weight: 600;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 17.486px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 13px;
+}
+
+Rbutton {
+    right: 38px;
+    bottom: 20px;
+    width: 140px;
+    height: 50px;
+    background-color: #111827;
+    color: #111827;
+    font-weight: 600;
+    border: 1px solid;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 17.486px;
+    border-color: #0059E0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 13px;
+}
+
+@media screen and (max-width: 860px) {
+
+    .Container-st {
+        flex-direction: column-reverse;
+    }
+
+    .right-container-st {
+        width: auto;
+        
+    }
+}
+
+
+
+
+
