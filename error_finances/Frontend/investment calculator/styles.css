@@ -7,7 +7,7 @@ body {
 }
 
 h1, h2 {
-    text-align: justify;
+    text-align: left;
     font-weight: 700;
     margin-left: 5px;
 }
@@ -20,7 +20,6 @@ t{
     background-color: #111827;
     padding: 20px;
     border-radius: 17.486px;
-    margin-top: 20px;
 }
 
 .left-container-allbills{
@@ -33,24 +32,35 @@ t{
     padding: 20px;
 }
 
+.All-bills h2{
+ 
+}
+
+
 .All-bills input {
-    background-color: #1F2A3F;
+    background-color: #111827;
     border-radius: 17.486px;
     padding: 5px;
-    border-style: double;
     margin-right: 20px;
+    border-style: none;
     border-color: white;
     color: white;
+    margin-bottom: 20px;
+}
+
+form {
+    
 }
 
 .All-bills button{
-    background-color: #1F2A3F;
+    background-color: #0059E0;;
     border-radius: 17.486px;
     padding: 5px;
-    border-style: double;
     margin-right: 20px;
+    border-style: none;
     border-color: white;
     color: white;
+    }
 
 .All-bills table {
     width: 100%;
@@ -105,27 +115,9 @@ t{
 }
 
 
-@media (max-width: 768px) {
-    .bubbles {
+@media (max-width: 1510px) {
+    form {
         display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
-    }
-
-    .bubble {
-        margin-top: 20px;
-    }
-
-    .bubblesh {
-        width: 100%;
-        padding-top: 17px;
-    }
-
-    .add-button {
-        width: 30%;
-        margin-top: 20px;
+        flex-direction: column;
     }
 }
-
-
-
