@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All bills</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <h1 style="margin-bottom: 0px;"><t>Investment calculator</t></h1>
+    <div class="dashboard" style="padding-top: 0px;">
+<div class="left-container-allbills">
+    
+    
+    <div class="All-bills">
+       <h2>Calculadora de Juros Compostos</h2>
+
+  <form id="calculator-form">
+    <label for="principal">Valor Inicial:</label>
+    <input type="number" id="principal" required>
+
+    <label for="monthly-contrib">Valor Mensal:</label>
+    <input type="number" id="monthly-contrib" required>
+
+    <label for="annual-rate">Taxa de Juros Anual (%):</label>
+    <input type="number" id="annual-rate" required>
+
+    <label for="years">Período (em anos):</label>
+    <input type="number" id="years" required>
+
+    <button type="button" onclick="calculate()">Calcular</button>
+  </form>
+
+  <table id="result-table">
+    <thead>
+      <tr>
+        <th>Mês</th>
+        <th>Juros</th>
+        <th>Total Investido</th>
+        <th>Total Juros</th>
+        <th>Total Acumulado</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    function calculate() {
+      var principal = parseFloat(document.getElementById("principal").value);
+      var monthlyContrib = parseFloat(document.getElementById("monthly-contrib").value);
+      var annualRate = parseFloat(document.getElementById("annual-rate").value);
+      var years = parseFloat(document.getElementById("years").value);
+
+      var monthlyRate = (annualRate / 100) / 12;
+      var totalInvested = 0;
+      var totalInterest = 0;
+
+      var tableBody = document.querySelector("#result-table tbody");
+      tableBody.innerHTML = '';
+
+      for (var i = 0; i <= years * 12; i++) {
+        var interest = (i === 0) ? 0 : (principal + totalInvested) * monthlyRate;
+        totalInvested += (i === 0) ? 0 : monthlyContrib;
+        totalInterest += interest;
+
+        var totalAmount = principal + totalInvested + totalInterest;
+
+        var row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${i}</td>
+          <td>${(i === 0) ? '--' : interest.toFixed(2)}</td>
+          <td>${(i === 0) ? principal.toFixed(2) : (principal + totalInvested).toFixed(2)}</td>
+          <td>${(i === 0) ? '--' : totalInterest.toFixed(2)}</td>
+          <td>${totalAmount.toFixed(2)}</td>
+        `;
+        tableBody.appendChild(row);
+      }
+    }
+
+    document.querySelector("button").addEventListener("click", calculate);
+  </script>
+
+</div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,131 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #111827;
+    font-family: 'Jockey One', sans-serif;
+    color: var(--Texto, #FFF);
+}
+
+h1, h2 {
+    text-align: justify;
+    font-weight: 700;
+    margin-left: 5px;
+}
+
+t{
+    margin-left: 40px;
+}
+
+.left-container-allbills{
+    background-color: #111827;
+    padding: 20px;
+    border-radius: 17.486px;
+    margin-top: 20px;
+}
+
+.left-container-allbills{
+    width: 100%; 
+}
+
+.All-bills{
+    background-color: #1F2A3F;
+    border-radius: 17.486px;
+    padding: 20px;
+}
+
+.All-bills input {
+    background-color: #1F2A3F;
+    border-radius: 17.486px;
+    padding: 5px;
+    border-style: double;
+    margin-right: 20px;
+    border-color: white;
+    color: white;
+}
+
+.All-bills button{
+    background-color: #1F2A3F;
+    border-radius: 17.486px;
+    padding: 5px;
+    border-style: double;
+    margin-right: 20px;
+    border-color: white;
+    color: white;
+
+.All-bills table {
+    width: 100%;
+    color: var(--Texto);
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+/*
+.All-bills th,
+.All-bills td {
+        border: 1px solid var(--Texto);
+        padding-top: 10px;
+        padding-bottom: 10px;
+        text-align: center;
+        font-weight: normal;
+    }
+*/
+.show-all-button,
+.add-button {
+    width: 190px;
+    height: 52.458px;
+    border-radius: 17.486px;
+    background-color: #0059E0;
+    color: var(--Texto);
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.add-button img {
+    height: 25px; 
+}
+
+
+.reminders {
+    max-height: 88.305px;
+    overflow-y: auto;
+    margin-top: 10px;
+}
+
+.reminders .reminder {
+    background-color: #1F2A3F;
+    width: 180.981px;
+    height: 88.305px;
+    border-radius: 17.486px;
+    margin-bottom: 10px;
+}
+
+.reminders .reminder:last-child {
+    margin-bottom: 0;
+}
+
+
+@media (max-width: 768px) {
+    .bubbles {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .bubble {
+        margin-top: 20px;
+    }
+
+    .bubblesh {
+        width: 100%;
+        padding-top: 17px;
+    }
+
+    .add-button {
+        width: 30%;
+        margin-top: 20px;
+    }
+}
+
+
+
