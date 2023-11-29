@@ -1,0 +1,50 @@
+{% extends 'master_transactions.html' %}
+
+{% block title %}
+  Save Savvy - Help
+{% endblock %}
+
+{% block content %}
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static "/help/styles.css" %}">
+</head>
+
+<body>
+    
+    <div class="Help" style="
+   margin-top: 2em;
+">
+        <div class="left-container-help">
+            <h2>Frequently Asked Question</h2>
+            <div class="container-help">
+                <div class="white-container-help">
+                    <ul id="ul-help">
+                        <li><a href="#">How can I add a new card to my account?</a></li>
+                        <li><a href="#">What types of expenses can I track with this tool?</a></li>
+                        <li><a href="#">Is it possible to categorize my expenses to get a more detailed financial picture?</a></li>
+                        <li><a href="#">How do I navigate and visualize my financial data through graphs and tables?</a></li>
+                        <li><a href="#">Can I set budget limits for different expense categories in the system?</a></li>
+                        <li><a href="#">Are there security measures in place to protect my financial information?</a></li>
+                    </ul>
+                </div>
+                <div class="blue-container-help">
+                    <ul id="ul-help">
+                        <li><a href="#">How can I track and manage recurring expenses?</a></li>
+                        <li><a href="#">Is it possible to link multiple cards?</a></li>
+                        <li><a href="#">How often is financial data updated in the system?</a></li>
+                        <li><a href="#">Can I receive alerts or notifications about unusual spending patterns or budget overruns?</a></li>
+                        <li><a href="#">Is there a mobile app available to access my financial management account on the go?</a></li>
+                        <li><a href="#">How can I export my financial data or reports for external analysis or record keeping?</a></li>
+                    </ul>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="right-container-help">
+            <img src="{% static "/help/ads.jpeg" %}" alt="Ads" id="img-help">
+        </div>
+    </div>
+</body>
+
+{% endblock %}

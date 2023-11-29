@@ -1,22 +1,50 @@
-{% extends "account/base.html" %}
+{% extends 'master_transactions.html' %}
 
 {% load i18n %}
 
-{% block head_title %}{% trans "Sign Out" %}{% endblock %}
+{% block title %} Save Savvy - Sign out {% endblock %}
 
 {% block content %}
-<h1>{% trans "Sign Out" %}</h1>
+<style>
+.value {
+    display: none;
+}
 
-<p>{% trans 'Are you sure you want to sign out?' %}</p>
+.navbar p {
+    display: none;
+}
 
+.user-info{
+  display: none;
+}
 
-<form method="post" action="{% url 'account_logout' %}">
-  {% csrf_token %}
-  {% if redirect_field_value %}
-  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
-  {% endif %}
-  <button type="submit">{% trans 'Sign Out' %}</button>
-</form>
+@media screen and (max-width: 860px) {
+  .user-info{
+      display: flex;
+      margin-top: 0;
+  }
+
+}
+
+</style>
+
+<div class="container" style="margin-top: 4.2em;">
+  <div class="card rounded p-4" style="background-color: #1F2A3F; color:white;position: unset;">
+    <h1 class="font-weight-bold">Sign out: {{ transaction.transactionName }}</h1>
+    <h6 class=""><b>Are you sure you want to sign out?</b></h6>
+    <div class="row">
+      <div class="col-md-7 mb-2">
+        <form method="post" action="{% url 'account_logout' %}">
+          {% csrf_token %}
+          {% if redirect_field_value %}
+          <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+          {% endif %}
+          <button class="btn btn-info btn-block btn-lg mt-3" type="submit">Confirm</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 {% endblock %}

@@ -6,7 +6,7 @@ from django.template import loader
 # Create your views here.
 
 def userData(request):
-    current_user_name = request.user.first_name
+    current_user_name = request.user.username
     current_user_id = request.user
 
     context = {
@@ -29,3 +29,13 @@ def settings(request):
     }
 
     return render(request, 'settings.html', context)
+
+def help(request):
+    user_data = userData(request)
+    
+    context = {
+        "current_user_id": user_data["current_user_id"],
+        "current_user_name": user_data["current_user_name"],   
+    }
+
+    return render(request, 'help.html', context)

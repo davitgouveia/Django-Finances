@@ -20,7 +20,7 @@ from .models import TransactionAccountTypes
 
 @login_required
 def userData(request):
-    current_user_name = request.user.first_name
+    current_user_name = request.user.username
     current_user_id = request.user
 
     context = {

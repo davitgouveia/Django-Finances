@@ -40,16 +40,18 @@
   
     
     <div class="container" id="list-container">
-      <!--Item-->
-      {% for y in user_transactions %}
-      <div class="row">
-        <div class="creationDate">{{ y.creationDate }}</div>
-    </div>
-      <a href="/transactions/details/{{ y.id }}">
+      {% if user_transactions %}
+        <!--Item-->
+        {% for y in user_transactions %}
+        <div class="row">
+          <div class="creationDate">{{ y.creationDate }}</div>
+        </div>
+        <a href="/transactions/details/{{ y.id }}">
         <div class="row" id="list-item">
           <div class="col-auto" style="display: flex; align-items: center; justify-content: center;">
               <i class="material-icons" style="color: #{{ y.idCategory.categoryColor }};" id="icon">radio_button_checked</i>
           </div>
+
           <div class="col">
               <div class="row">
                   <div class="title">{{ y.transactionName }}</div>
@@ -58,6 +60,7 @@
                   <div class="info">{{y.idCategory.categoryName}} | <i class="material-icons" style="color: {{y.idTransactionAccount.accountColor}}; font-size: small;">credit_card</i>&#8287{{y.idTransactionAccount.accountName}}</div>
               </div>
           </div>
+
           <div class="col-auto" id="value-col">
               <div class="row">
                   <div class="value" {% if y.idType.type == "Expense"%}
@@ -75,10 +78,15 @@
                   <div class="dueDate">{{ y.dueDate }}</div>
               </div>
           </div>
-      </div>
+        </div>
       {% endfor %}
     </a>
-      </div>
+      {% else %}
+        <h2>No records found</h2>
+        <p>Please try a different filter or create a record</p>
+      {% endif %}
+      
+    </div>
 
 </div>
   </div>
