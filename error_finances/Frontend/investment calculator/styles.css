@@ -32,11 +32,6 @@ t{
     padding: 20px;
 }
 
-.All-bills h2{
- 
-}
-
-
 .All-bills input {
     background-color: #111827;
     border-radius: 17.486px;
@@ -46,10 +41,6 @@ t{
     border-color: white;
     color: white;
     margin-bottom: 20px;
-}
-
-form {
-    
 }
 
 .All-bills button{
@@ -69,51 +60,11 @@ form {
     margin-top: 20px;
 }
 
-/*
-.All-bills th,
-.All-bills td {
-        border: 1px solid var(--Texto);
-        padding-top: 10px;
-        padding-bottom: 10px;
-        text-align: center;
-        font-weight: normal;
-    }
-*/
-.show-all-button,
-.add-button {
-    width: 190px;
-    height: 52.458px;
-    border-radius: 17.486px;
-    background-color: #0059E0;
-    color: var(--Texto);
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
+tbody, td, tfoot, th, thead, tr {
+    border-color: #111827;
+    border-style: solid;
+    border-width: 2px;
 }
-
-.add-button img {
-    height: 25px; 
-}
-
-
-.reminders {
-    max-height: 88.305px;
-    overflow-y: auto;
-    margin-top: 10px;
-}
-
-.reminders .reminder {
-    background-color: #1F2A3F;
-    width: 180.981px;
-    height: 88.305px;
-    border-radius: 17.486px;
-    margin-bottom: 10px;
-}
-
-.reminders .reminder:last-child {
-    margin-bottom: 0;
-}
-
 
 @media (max-width: 1510px) {
     form {
