@@ -1,8 +1,7 @@
 
 from django.dispatch.dispatcher import receiver
 from allauth.account.signals import user_signed_up
-from django.contrib.auth.models import User  # Adjust this import if you are using a custom user model
-from transactions.models import TransactionAccount, TransactionAccountTypes  # Import your model
+from transactions.models import TransactionAccount, TransactionAccountTypes
 
 def get_account_type(type):
     type_instance = TransactionAccountTypes.objects.get(id=type)

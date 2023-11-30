@@ -49,3 +49,6 @@ def help(request):
     }
 
     return render(request, 'help.html', context)
+
+def teste(request):
+    return render(request, 'teste.html')
