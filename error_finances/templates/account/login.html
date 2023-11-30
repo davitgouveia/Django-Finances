@@ -65,13 +65,13 @@
 
 
 
-  <div class="socialaccount_ballot">
+  {% comment %} <div class="socialaccount_ballot">
   
     <ul class="socialaccount_providers">
       {% include "socialaccount/snippets/provider_list.html" with process="login" %}
     </ul>
   
-  </div>
+  </div> {% endcomment %}
 
 <p class="sign-up">Don't have an account? <a href="{{ signup_url }}">Sign Up</a></p>
 </div>

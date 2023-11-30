@@ -1,0 +1,98 @@
+{% extends 'master_transactions.html' %}
+
+{% block title %}
+  Save Savvy - Investments
+{% endblock %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    {% load static %}<link rel="stylesheet" href="{% static 'investments/styles.css' %}">
+</head>
+
+    <h1 style="margin-bottom: 0px;margin-top: 0.5em;"><t>Investment calculator</t></h1>
+    <div class="dashboard" style="padding-top: 0px;">
+    <div class="left-container-allbills">
+    
+    
+    <div class="All-bills">
+       <h2>Compound Interest Calculator</h2>
+
+  <form id="calculator-form" style="display: flex; flex-wrap: wrap;">
+    <div id='bubble'>
+    <label for="principal">Initial value:</label>
+    <input type="number" id="principal" required>
+    </div>
+    <div id='bubble'>
+    <label for="monthly-contrib">Monthly value:</label>
+    <input type="number" id="monthly-contrib" required>
+    </div>
+    <div id='bubble'>
+    <label for="annual-rate">Annual Rate (%):</label>
+    <input type="number" id="annual-rate" required>
+    </div>
+    <div id='bubble'>
+    <label for="years">Period (years):</label>
+    <input type="number" id="years" required>
+    </div>
+    <div id='bubble'>
+    <button type="button" onclick="calculate()">Calculate</button>
+    </div>
+  </form>
+
+  <table id="result-table">
+    <thead>
+      <tr>
+        <th>Month</th>
+        <th>Interest</th>
+        <th>Total In,vested</th>
+        <th>Total Interest</th>
+        <th>Total Accumulated </th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    function calculate() {
+      var principal = parseFloat(document.getElementById("principal").value);
+      var monthlyContrib = parseFloat(document.getElementById("monthly-contrib").value);
+      var annualRate = parseFloat(document.getElementById("annual-rate").value);
+      var years = parseFloat(document.getElementById("years").value);
+
+      var monthlyRate = (annualRate / 100) / 12;
+      var totalInvested = 0;
+      var totalInterest = 0;
+
+      var tableBody = document.querySelector("#result-table tbody");
+      tableBody.innerHTML = '';
+
+      for (var i = 0; i <= years * 12; i++) {
+        var interest = (i === 0) ? 0 : (principal + totalInvested) * monthlyRate;
+        totalInvested += (i === 0) ? 0 : monthlyContrib;
+        totalInterest += interest;
+
+        var totalAmount = principal + totalInvested + totalInterest;
+
+        var row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${i}</td>
+          <td>${(i === 0) ? '--' : interest.toFixed(2)}</td>
+          <td>${(i === 0) ? principal.toFixed(2) : (principal + totalInvested).toFixed(2)}</td>
+          <td>${(i === 0) ? '--' : totalInterest.toFixed(2)}</td>
+          <td>${totalAmount.toFixed(2)}</td>
+        `;
+        tableBody.appendChild(row);
+      }
+    }
+
+    document.querySelector("button").addEventListener("click", calculate);
+  </script>
+
+</div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    {% endblock %}

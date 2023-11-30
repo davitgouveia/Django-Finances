@@ -38,9 +38,12 @@ def userTransactions(request):
     user_accounts = get_user_accounts(user_data["current_user_id"])
     total_balance = calculate_total_balance(user_data["current_user_id"])
     today = date.today()
+    
     current_date = today.strftime("%Y-%m-%d")
     current_month = today.strftime("%m")
     current_year = today.strftime("%Y")
+    
+    user_available_category = TransactionCategory.objects.filter(idUser=user_data["current_user_id"], )
 
     # Main
     user_transactions = Transactions.objects.filter(
@@ -90,6 +93,7 @@ def userTransactions(request):
         "current_user_name": user_data["current_user_name"],
         "user_transactions": user_transactions,
         "user_accounts": user_accounts,
+        "user_available_category" : user_available_category,
         "current_date": current_date,
         "total_balance": total_balance,
     }
@@ -485,27 +489,62 @@ def expense_doughnut_chart(request):
         'data' : data,
     })
     
+def get_days_in_month(year, month):
+    first_day = datetime(year, month, 1)
+    last_day = datetime(year, month + 1, 1) - timedelta(days=1)
+    
+    all_days = [first_day + timedelta(days=x) for x in range((last_day - first_day).days + 1)]
+    
+    return all_days
+
 def expenseIncome_line_chart(request):
+    year = 2023
+    month = 11
     user_data = userData(request)
-    labels = []
-    data = []
-    color = []
+    labelsExpense = []
+    dataExpense = []
     
-    queryset = Expense.objects.values('idStatus__status').filter(transactions_ptr_id__idUser=user_data["current_user_id"]).annotate(transactions=Count('id'))
+    labelsIncome = []
+    dataIncome = []
     
-    for entry in queryset:
-        labels.append(entry['idStatus__status'])
-        if(entry['idStatus__status'] == 'Paid'):
-            color.append('#1ec92f')
-        else:
-            color.append('#f74c4c')
-        data.append(entry['transactions'])
+    # Get all days in the specified month and year
+    all_days = get_days_in_month(year, month)
+    
+    for day in all_days:
+        # Filter expenses by date
+        querysetExpense = Expense.objects.filter(
+            transactions_ptr_id__idUser=user_data["current_user_id"],
+            creationDate__year=day.year,
+            creationDate__month=day.month,
+            creationDate__day=day.day
+        ).values('id').annotate(transactions=Sum('value'))
         
-    return JsonResponse(data={
-        'labels' : labels,
-        'color' : color,
-        'data' : data,
-    })
+        # Filter incomes by date
+        querysetIncome = Income.objects.filter(
+            transactions_ptr_id__idUser=user_data["current_user_id"],
+            creationDate__year=day.year,
+            creationDate__month=day.month,
+            creationDate__day=day.day
+        ).values('id').annotate(transactions=Sum('value'))
+        
+        # Append data for each day
+        labelsExpense.append(day.strftime('%Y-%m-%d'))
+        dataExpense.append(sum(entry['transactions'] or 0 for entry in querysetExpense))
+        
+        labelsIncome.append(day.strftime('%Y-%m-%d'))
+        dataIncome.append(sum(entry['transactions'] or 0 for entry in querysetIncome))
+    
+    return JsonResponse({
+        'dataExpense': {
+            'labelsExpense': labelsExpense,
+            'dataExpense': dataExpense,
+        },
+        'dataIncome': {
+            'labelsIncome': labelsIncome,
+            'dataIncome': dataIncome,
+        }
+    }
+    )
 
 
 @login_required

@@ -30,6 +30,16 @@ def settings(request):
 
     return render(request, 'settings.html', context)
 
+def investments(request):
+    user_data = userData(request)
+    
+    context = {
+        "current_user_id": user_data["current_user_id"],
+        "current_user_name": user_data["current_user_name"],   
+    }
+
+    return render(request, 'investments.html', context)
+
 def help(request):
     user_data = userData(request)
     

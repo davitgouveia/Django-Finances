@@ -20,21 +20,20 @@
 <div class="left-container-allbills">
     <div class="bubbles">
         <div class="bubblesh">
-            <input type="text" placeholder="Enter with the bill name...">
+            <input type="text" id="text-filter" placeholder="Enter with the transaction name...">
         </div>
         <div class="bubble">
-          {% comment %} <img src="{% static "/transactions/alltransactions/images/icone_calendario.png" %}" alt="Calendário"> {% endcomment %}
-                <input type="month" value="">
-                <!-- Adicione opções de datas aqui -->
+                <input type="month" value="" id="month-filter">
         </div>
         <div class="bubble">
-          {% comment %} <img src="{% static "/transactions/alltransactions/images/icone_filtro.png" %}" alt="Filtro"> {% endcomment %}
             <select>
-                <option value="" disabled selected>Filters</option>
-                <!-- Adicione opções de filtros aqui -->
+                <option value="" selected id="category-filter">All</option>
+              {% for category in user_available_category %}
+                <option value="{{category.id}}">{{category.categoryName}}</option>
+              {% endfor %}
             </select>
         </div>
-        <button class="search-button"><img src="{% static "/transactions/alltransactions/images/icone_pesquisa.png" %}" alt="Pesquisar"></button>
+        <button class="search-button" type="submit"><img src="{% static "/transactions/alltransactions/images/icone_pesquisa.png" %}" alt="Pesquisar"></button>
         <button class="add-button"  data-bs-toggle="modal" data-bs-target="#exampleModal"><img src="{% static "/transactions/alltransactions/images/adicionar.svg" %}" alt="Add"></button>
     </div>
   

@@ -34,8 +34,8 @@
             Total Balance<br /><d>R$ {{ total_balance }}</d>
           </div>
         </div>
-        <h2>Graphs</h2>
-        <div class="graphs-container" style="display: flex;">
+        <h2>Graphs of the month</h2>
+        <div class="graphs-container" style="display: flex; flex-wrap: wrap; justify-content: center;">
           <!-- Graficos -->
           <div id="graph" style="width: 50%;">
             <p style="padding: 1em; margin: 0; font-weight: 600;">Expenses by Category</p>
@@ -44,6 +44,10 @@
           <div id="graph" style="width: 50%;">
             <p style="padding: 1em; margin: 0; font-weight: 600;">Expenses Status</p>
             <canvas id="expense-doughnut-chart" data-url="{% url 'expense-doughnut-chart' %}"></canvas>
+          </div>
+          <div id="graph" style="width: 80%;">
+            <p style="padding: 1em; margin: 0; font-weight: 600;">Expenses vs. Income</p>
+            <canvas id="expenseIncome_line_chart" data-url="{% url 'expenseincome-line-chart' %}"></canvas>
           </div>
 
 
@@ -66,12 +70,12 @@
       // Category Pie Chart
       $(function () {
   
-        var $populationChart = $("#category-pie-chart");
+        var $categoryChart = $("#category-pie-chart");
         $.ajax({
-          url: $populationChart.data("url"),
+          url: $categoryChart.data("url"),
           success: function (data) {
   
-            var ctx = $populationChart[0].getContext("2d");
+            var ctx = $categoryChart[0].getContext("2d");
   
             new Chart(ctx, {
               type: 'pie',
@@ -154,6 +158,41 @@
         });
       });
   
+    </script>
+
+    <script>
+      // Expense Income Line Chart
+      $(function () {
+        var $expenseIncome_line_chart = $("#expenseIncome_line_chart");
+        $.ajax({
+          url: $expenseIncome_line_chart.data("url"),
+          success: function (data) {
+            var ctx = $expenseIncome_line_chart[0].getContext("2d");
+    
+            new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: data.dataExpense.labelsExpense,  // Assuming labelsExpense is the array of labels
+                datasets: [{
+                  label: 'Expense',
+                  borderColor: 'rgba(255, 99, 132, 1)',  // Specify your color
+                  data: data.dataExpense.dataExpense
+                }, {
+                  label: 'Income',
+                  borderColor: 'rgba(75, 192, 192, 1)',  // Specify your color
+                  data: data.dataIncome.dataIncome
+                }]
+              },
+              options: {
+                responsive: true,
+                legend: {
+                  position: 'bottom',
+                },
+              }
+            });
+          }
+        });
+      });
     </script>
   </body>
 {% endblock %}
